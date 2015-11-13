@@ -12,6 +12,6 @@ public class tester {
 	 * @return string of awesomeness
 	 */
 	public static String EasterEgg() {
-		return "Growlin' Grandpa";
+		return "Growlin' Grandpa" + "\nMelinda Robertson";
 	}
 }
