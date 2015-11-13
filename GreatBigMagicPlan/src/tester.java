@@ -3,7 +3,10 @@ public class tester {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("Do something");
+		System.out.println(EasterEgg());
 	}
 
+	public static String EasterEgg() {
+		return "Growlin' Grandpa";
+	}
 }
