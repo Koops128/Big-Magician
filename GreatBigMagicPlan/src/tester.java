@@ -12,6 +12,6 @@ public class tester {
 	 * @return string of awesomeness
 	 */
 	public static String EasterEgg() {
-		return "Growlin' Grandpa" + "\nMelinda Robertson";
+		return "Growlin' Grandpa" + "\nMelinda Robertson" + "\nPaul Gray (Captain EagleFort)";
 	}
 }
