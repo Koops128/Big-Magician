@@ -36,6 +36,7 @@ public class AboutFrame extends JFrame {
 		main.add(lbl);
 		main.add(createLabel("Melinda Robertson", "The prettiest princess in all the realm."));
 		main.add(createLabel("Sean Markus", "The Old Man by the coding sea."));
+		main.add(createLabel("Ash", "The Fool."));
 		//TODO add more names here		
 		this.add(main);
 
