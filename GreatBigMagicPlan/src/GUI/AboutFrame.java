@@ -13,7 +13,9 @@ import javax.swing.JTextField;
 /**
  * 
  * @author Melinda Robertson
- * To test out a way to create the about pane Easter Egg.
+ * @author Ashcoon Minoo
+ * @version November 2015
+ * It's an egg, an Easter Egg.
  */
 public class AboutFrame extends JFrame {
 	
@@ -21,22 +23,25 @@ public class AboutFrame extends JFrame {
 	 * It's super serial.
 	 */
 	private static final long serialVersionUID = -2902400071493857246L;
+	
+	private JPanel main;
 
 	/**
 	 * Sets up the frame with a main panel that holds multiple JPanels
 	 * with labels and text fields.
 	 */
 	public AboutFrame() {
+		//this should change to DISPOSE_ON_CLOSE for the actual program
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("About Big Magician");
 		JLabel lbl = new JLabel("We are...");
 		lbl.setFont(new Font(Font.DIALOG_INPUT,Font.PLAIN, 16));
-		JPanel main = new JPanel();
+		main = new JPanel();
 		main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
 		main.add(lbl);
 		main.add(createLabel("Melinda Robertson", "The prettiest princess in all the realm."));
 		main.add(createLabel("Sean Markus", "The Old Man by the coding sea."));
-		main.add(createLabel("Ash", "The Fool."));
+		main.add(createLabel("Ash", "The Fool who followed him."));
 		//TODO add more names here		
 		this.add(main);
 
@@ -45,8 +50,14 @@ public class AboutFrame extends JFrame {
 		this.setVisible(true);
 	}
 	
+	//for custom javadoc tags...add:
+	//-tag mmr.pre:a:"The Pre-condition"
+	//to the Extra JavaDoc options when you generate the javadoc
 	/**
 	 * Makes a panel that displays the name and description of a person.
+	 * @mmr.pre Assumes that the name is shorter than the description and
+	 * 			that both are not longer than 82 characters.
+	 * @mmr.post Resulting JPanel will not have wrapped text.
 	 * @param name is the name.
 	 * @param description is the person's description.
 	 * @return a JPanel that holds the person's name and description
@@ -55,19 +66,35 @@ public class AboutFrame extends JFrame {
 	private JPanel createLabel(String name, String description) {
 		JPanel person = new JPanel();
 		person.setLayout(new BoxLayout(person, BoxLayout.X_AXIS));
-		JLabel lbl = new JLabel(name);
-		lbl.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+		JLabel lbl = new JLabel(" " + name + " ");
+		lbl.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
 		person.add(lbl);
 		JTextField tf = new JTextField(description);
-		tf.setDisabledTextColor(Color.GRAY);
+		tf.setDisabledTextColor(Color.DARK_GRAY);
 		tf.setEnabled(false);
 		person.add(tf);
 		return person;
 	}
-
+	
 	/**
-	 * It's ok folks, it's only main.
-	 * @param args nothing to see here...
+	 * This is for the test. For reals, there is no reason for this
+	 * method to exist beyond using it for the JUnit test.
+	 * @mmr.pre Assumes that the name is shorter than the description and
+	 * 			that both are not longer than 82 characters.
+	 * @mmr.post Resulting JPanel will not have wrapped text.
+	 * @param name is the name.
+	 * @param description is the person's description.
+	 */
+	public void addNewLabel(String name, String description) {
+		main.add(createLabel(name, description));
+		Dimension d = main.getPreferredSize();
+		this.setBounds(200, 200, (int) d.getWidth() + 25, (int) d.getHeight() + 50);
+		this.setVisible(true);
+	}
+	
+	/**
+	 * This needs to be deleted for actual program.
+	 * @param args are the args.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -76,5 +103,4 @@ public class AboutFrame extends JFrame {
 			e.printStackTrace();
 		}
 	}
-
 }
