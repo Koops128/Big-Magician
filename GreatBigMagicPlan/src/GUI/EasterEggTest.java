@@ -28,9 +28,8 @@ public class EasterEggTest {
      * Test method for... Something?.
      */
     @Test
-    public void test() {
-    	
-    	
+    public void testAddLabel() {
+    	myFrame.addNewLabel("Test Name", "A description of our test name.");
     }
 
 }
