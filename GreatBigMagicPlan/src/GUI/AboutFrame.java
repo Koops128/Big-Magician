@@ -1,15 +1,17 @@
  package GUI;
  
  import java.awt.Color;
- import java.awt.Dimension;
- import java.awt.Font;
- 
- import javax.swing.BorderFactory;
- import javax.swing.BoxLayout;
- import javax.swing.JFrame;
- import javax.swing.JLabel;
- import javax.swing.JPanel;
- import javax.swing.JTextField;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.util.Random;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
  /**
   * 
   * @author Melinda Robertson
@@ -44,8 +46,22 @@
  		main.add(createLabel("Ash", "The Fool."));
  		main.add(createLabel("Matthew Cles", "The Doctor will see your code now."));
  		main.add(createLabel("Paul Gray", "The Potentate of Feather and Stone."));
- 		//TODO add more names here	
- 		//NEW COMMENT!!!!!!!!!!!!
+ 		JButton btn = new JButton("More Things!");
+ 		btn.addActionListener((event)-> {
+ 			Random r = new Random();
+ 			int stop = r.nextInt(20) + 1;
+ 			String name = "";
+ 			for (int i = 0; i < stop; i++) {
+ 				name += (char) (r.nextInt(26) + 97);
+ 			}
+ 			String desc = "";
+ 			stop = r.nextInt(82) + 1;
+ 			for (int i = 0; i < stop; i++) {
+ 				desc += (char) (r.nextInt(26) + 97);
+ 			}
+ 			addNewLabel(name,desc);
+ 		});
+ 		main.add(btn);
  		this.add(main);
  
  		Dimension d = main.getPreferredSize();
