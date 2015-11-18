@@ -13,7 +13,7 @@
  /**
   * 
   * @author Melinda Robertson
-  * @author Ashcoon Minoo
+  * @author Ashcon Minoo
   * @version November 2015
   * It's an egg, an Easter Egg.
   */
