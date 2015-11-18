@@ -1,5 +1,6 @@
 package GUI;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,6 +31,8 @@ public class EasterEggTest {
     @Test
     public void testAddLabel() {
     	myFrame.addNewLabel("Test Name", "A description of our test name.");
+    	boolean condition = myFrame.getTitle().equals("About Big Magician");
+    	Assert.assertTrue(condition);;
     }
 
 }
