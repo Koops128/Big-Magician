@@ -3,7 +3,6 @@
  */
 package GUI;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
@@ -19,10 +18,7 @@ public class MainFrame{
 	
 	public MainFrame() {
 		
-		//TODO
-	}
-
-	public void callUpdate() {
-		//TODO
+		//TODO after MainFrame makes all the things the editor
+		//needs to update its observers
 	}
 }
