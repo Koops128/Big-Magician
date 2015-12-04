@@ -4,6 +4,7 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+
+import Model.Bank;
 
 /**
  * @author Melinda Robertson
@@ -28,10 +31,10 @@ public class MainPanel extends JPanel implements Observer {
 	
 	private JTextArea clause;
 	
-	//private ObservableEditor editor;
+	private Bank editor;
 	
-	public MainPanel(/*ObservableEditor editor*/) {
-		//editor.registerObserver(this);
+	public MainPanel(Bank editor) {
+		this.editor = editor;
 		this.setLayout(new BorderLayout());
 		buildTablePanel();
 		buildBtnPanel();
@@ -40,7 +43,7 @@ public class MainPanel extends JPanel implements Observer {
 	public void buildTablePanel() {
 		JPanel tblPanel = new JPanel();
 		table = new JTable();
-		
+		//table.setModel(editor.getModel("All"));
 		JScrollPane sc = new JScrollPane(table);
 		tblPanel.add(sc);
 		this.add(tblPanel, BorderLayout.CENTER);
@@ -53,11 +56,17 @@ public class MainPanel extends JPanel implements Observer {
 	 *  Delete Clause
 	 */
 	public void buildBtnPanel() {
-		//TODO what layout should be used?
 		JPanel btnPanel = new JPanel();
 		JButton use = new JButton("Use Clause");
 		use.addActionListener((event)->{
-			//TODO need to open the clause
+			//Reference: http://www.avajava.com/tutorials/lessons/how-do-i-run-another-application-from-java.html
+			//@author Deron Eriksson
+			try {
+				Runtime runTime = Runtime.getRuntime();
+				Process process = runTime.exec("notepad");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		});
 		
 		JButton edit = new JButton("Edit Clause");

@@ -3,10 +3,10 @@ package GUI;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
+
+import Model.Bank;
 
 /**
  * @author Melinda Robertson
@@ -22,10 +22,10 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	private EditPanel edit;
 	public final static String EDITNAME = "Edit View";
 	
-	public CardPanel(/*ObservableEditor editor*/) {
+	public CardPanel(Bank editor) {
 		this.setLayout(new CardLayout());
 		
-		main = new MainPanel(/*editor*/);
+		main = new MainPanel(editor);
 		edit = new EditPanel(/*editor*/);
 		
 		main.addPropertyChangeListener("switch", this);
