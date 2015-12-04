@@ -16,17 +16,17 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	
 	public final static String PROPERTYNAME = "switch";
 	
-	private JPanel main;
+	private MainPanel main;
 	public final static String MAINNAME = "Clause View";
 	
-	private JPanel edit;
+	private EditPanel edit;
 	public final static String EDITNAME = "Edit View";
 	
 	public CardPanel(/*ObservableEditor editor*/) {
 		this.setLayout(new CardLayout());
 		
-		main = new JPanel(/*editor*/);
-		edit = new JPanel(/*editor*/);
+		main = new MainPanel(/*editor*/);
+		edit = new EditPanel(/*editor*/);
 		
 		main.addPropertyChangeListener("switch", this);
 		edit.addPropertyChangeListener("switch", this);
