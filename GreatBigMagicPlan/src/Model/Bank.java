@@ -11,20 +11,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import javax.swing.table.TableModel;
 
 public class Bank {
 	
 	public static final String USERNAME = "root";
 	public static final String PASSWORD = "**********";
 	
-	private Map<String, Entry> myEntries;
+	private List<Entry> myEntries;
+	private TableModel myTable;
 	private Connection conn;
 	
 	public Bank() {
-		myEntries = new HashMap<String, Entry>();
+		myEntries = new ArrayList<Entry>();
+		myTable = new MyTableModel();
 		conn = null;
 		createConnection();
 		loadEntries();
@@ -63,7 +69,7 @@ public class Bank {
 				String description = rs.getString("Description");
 				String content = rs.getString("Content");
 				Entry e = new Entry(title, type, description, content);
-				myEntries.put(title, e);
+				myEntries.add(e);
 				System.out.println("  Title: " + title);
 			}
 		} catch (SQLException e) {
@@ -97,12 +103,12 @@ public class Bank {
 	}
 	
 	public void addEntry(Entry e) {
-		if (myEntries.containsValue(e)) {
+		if (myEntries.contains(e)) {
 			System.out.println("Entry: " + e.myTitle + " already in the Bank");
-		} else if (myEntries.containsKey(e.myTitle)) {
+		} else if (myEntries.contains(e.myTitle)) {
 			System.out.println("Another Entry already has Title: " + e.myTitle);			
 		} else {
-			myEntries.put(e.myTitle, e);
+			myEntries.add(e);
 			String sql = "insert into 360Project.data values " + "(?, ?, ?, ?); ";
 			PreparedStatement preparedStatement = null;
 			try {
@@ -120,9 +126,9 @@ public class Bank {
 		}
 	}
 	
-	public Entry getEntry(String x) {
-		return myEntries.get(x);
-	}
+//	public Entry getEntry(String x) {
+//		return myEntries.get(x);
+//	}
 		
 	public static void main(String[] args) {
 		System.out.println("Start Bank Test:");
