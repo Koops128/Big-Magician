@@ -30,7 +30,7 @@ public class Editor {
 	}
 	
 	public TableModel getTable() {
-		myBank.getTable();
+		return myBank.getTable();
 	}
 	
 			
