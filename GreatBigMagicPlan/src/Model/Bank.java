@@ -11,10 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.table.TableModel;
@@ -24,13 +20,13 @@ public class Bank {
 	public static final String USERNAME = "root";
 	public static final String PASSWORD = "**********";
 	
-	private List<Entry> myEntries;
-	private TableModel myTable;
+	//private List<Entry> myEntries;
+	private TableModel myEntries;
 	private Connection conn;
 	
 	public Bank() {
-		myEntries = new ArrayList<Entry>();
-		myTable = new MyTableModel();
+		//myEntries = new ArrayList<Entry>();
+		myEntries = new EntryTableModel();
 		conn = null;
 		createConnection();
 		loadEntries();
@@ -69,7 +65,7 @@ public class Bank {
 				String description = rs.getString("Description");
 				String content = rs.getString("Content");
 				Entry e = new Entry(title, type, description, content);
-				myEntries.add(e);
+				((EntryTableModel) myEntries).add(e);
 				System.out.println("  Title: " + title);
 			}
 		} catch (SQLException e) {
@@ -88,7 +84,7 @@ public class Bank {
 	}
 	
 	public void deleteEntry(Entry e) {
-		myEntries.remove(e.myTitle);
+		((EntryTableModel) myEntries).remove(e);
 		PreparedStatement stmt = null;
 		String query = "delete from 360Project.data where Title = ?";
 	      try { 
@@ -103,12 +99,12 @@ public class Bank {
 	}
 	
 	public void addEntry(Entry e) {
-		if (myEntries.contains(e)) {
+		if (((EntryTableModel) myEntries).contains(e)) {
 			System.out.println("Entry: " + e.myTitle + " already in the Bank");
-		} else if (myEntries.contains(e.myTitle)) {
+		} else if (((EntryTableModel) myEntries).contains(e.myTitle)) {
 			System.out.println("Another Entry already has Title: " + e.myTitle);			
 		} else {
-			myEntries.add(e);
+			((EntryTableModel) myEntries).add(e);
 			String sql = "insert into 360Project.data values " + "(?, ?, ?, ?); ";
 			PreparedStatement preparedStatement = null;
 			try {
@@ -126,9 +122,13 @@ public class Bank {
 		}
 	}
 	
-//	public Entry getEntry(String x) {
-//		return myEntries.get(x);
-//	}
+	public Entry getEntry(String x) {
+		return ((EntryTableModel) myEntries).get(x);
+	}
+	
+	public TableModel getTable() {
+		return myEntries;
+	}
 		
 	public static void main(String[] args) {
 		System.out.println("Start Bank Test:");
