@@ -40,9 +40,9 @@ public class MainPanel extends JPanel implements Observer {
 	public void buildTablePanel() {
 		JPanel tblPanel = new JPanel();
 		table = new JTable();
+		
 		JScrollPane sc = new JScrollPane(table);
 		tblPanel.add(sc);
-		//TODO
 		this.add(tblPanel, BorderLayout.CENTER);
 	}
 	

@@ -34,7 +34,7 @@ import javax.swing.JTextField;
  	 */
  	public AboutFrame() {
  		//this should change to DISPOSE_ON_CLOSE for the actual program
- 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+ 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
  		this.setTitle("About Big Magician");
  		JLabel lbl = new JLabel("We are...");
  		lbl.setFont(new Font(Font.DIALOG_INPUT,Font.PLAIN, 16));
@@ -110,16 +110,4 @@ import javax.swing.JTextField;
  		this.setBounds(200, 200, (int) d.getWidth() + 25, (int) d.getHeight() + 50);
  		this.setVisible(true);
  	}
- 	
- 	/**
- 	 * This needs to be deleted for actual program.
- 	 * @param args are the args.
- 	 */
- 	public static void main(String[] args) {
- 		try {
- 			new AboutFrame();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

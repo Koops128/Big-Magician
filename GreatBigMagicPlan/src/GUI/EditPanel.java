@@ -42,6 +42,8 @@ public class EditPanel extends JPanel implements Observer{
 		//editor.registerListener(this);
 		//this.editor = editor;
 		this.setLayout(new BorderLayout());
+		buildEditPanel();
+		buildBtnPanel();
 	}
 	
 	public void buildEditPanel() {
