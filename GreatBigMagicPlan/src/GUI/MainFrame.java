@@ -3,22 +3,34 @@
  */
 package GUI;
 
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 /**
  * @author Sean
- *
+ * @author Melinda Robertson
+ * @version 20151203
  */
-public class MainFrame{
+public class MainFrame extends JFrame{
 
-	private JMenuBar menu; 
+	private Menu menu; 
 	
-	private JPanel cards;
+	private CardPanel cards;
 	
 	public MainFrame() {
-		
-		//TODO after MainFrame makes all the things the editor
-		//needs to update its observers
+		this.setTitle("Clause");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cards = new CardPanel();
+		menu = new Menu();
+		this.add(cards);
+		this.setSize(500, 500);
+		this.setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		try {
+			new MainFrame();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  *
  */
-public class MenuThingy {
+public class Menu {
 
 	private JMenu fileMenu;
 	
@@ -31,7 +31,7 @@ public class MenuThingy {
 	Panel myPanel = new Panel();
 	
 	
-	public MenuThingy(){
+	public Menu(){
 		
 		myPanel.setLayout(new BorderLayout(1, 3));
 		buildFileMenu();
@@ -55,7 +55,7 @@ public class MenuThingy {
 	public void buildAboutMenu() {
 		aboutMenu = new JMenu("About");
 		myPanel.add(aboutMenu, BorderLayout.NORTH);
-		AboutFrame af = new AboutFrame();
-		//TODO method stub
+		//AboutFrame af = new AboutFrame();
+		
 	}
 }
