@@ -4,17 +4,24 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+
+import javafx.scene.control.SelectionMode;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumn;
 
 import Model.Bank;
+import Model.Entry;
 
 /**
  * @author Melinda Robertson
@@ -31,9 +38,11 @@ public class MainPanel extends JPanel implements Observer {
 	
 	private JTextArea clause;
 	
-	private Bank editor;
+	private Editor editor;
 	
-	public MainPanel(Bank editor) {
+	private Entry currententry;
+	
+	public MainPanel(Editor editor) {
 		this.editor = editor;
 		this.setLayout(new BorderLayout());
 		buildTablePanel();
@@ -43,7 +52,15 @@ public class MainPanel extends JPanel implements Observer {
 	public void buildTablePanel() {
 		JPanel tblPanel = new JPanel();
 		table = new JTable();
-		//table.setModel(editor.getModel("All"));
+		table.setModel(editor.getTable());
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int row = table.getSelectedRow();
+				editor.setCurrentEntry((String)table.getModel().getValueAt(row, 0));
+			}
+		});
 		JScrollPane sc = new JScrollPane(table);
 		tblPanel.add(sc);
 		this.add(tblPanel, BorderLayout.CENTER);
@@ -59,6 +76,8 @@ public class MainPanel extends JPanel implements Observer {
 		JPanel btnPanel = new JPanel();
 		JButton use = new JButton("Use Clause");
 		use.addActionListener((event)->{
+			//create a file that is a current editable
+			//open that file and put
 			//Reference: http://www.avajava.com/tutorials/lessons/how-do-i-run-another-application-from-java.html
 			//@author Deron Eriksson
 			try {
@@ -71,20 +90,16 @@ public class MainPanel extends JPanel implements Observer {
 		
 		JButton edit = new JButton("Edit Clause");
 		edit.addActionListener((event)->{
-			//TODO set the Entry that is being edited
-			//get the number of the Entry from the JTable
-			//send to the editor
-			//this.editor.setEditing(          );
+			//the edit panel gets the current entry automatically.
 			this.firePropertyChange(
 					CardPanel.PROPERTYNAME, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
 		
 		JButton delete = new JButton("Delete Clause");
 		delete.addActionListener((event)->{
-			//TODO ask editor to delete Entry
-			//get the number of the Entry from the JTable
-			//send to the editor
-			//this.editor.deleteEntry(              );
+			//deletes the current entry, set by the table listener
+			this.editor.deleteEntry();
+			table.setModel(editor.getTable());
 		});
 		
 		btnPanel.add(use);

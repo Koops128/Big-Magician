@@ -22,7 +22,7 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	private EditPanel edit;
 	public final static String EDITNAME = "Edit View";
 	
-	public CardPanel(Bank editor) {
+	public CardPanel(Editor editor) {
 		this.setLayout(new CardLayout());
 		
 		main = new MainPanel(editor);
@@ -39,6 +39,7 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	public void propertyChange(PropertyChangeEvent event) {
 		if (PROPERTYNAME.equals(event.getPropertyName())) {
 			CardLayout cd = (CardLayout) this.getLayout();
+			this.edit.setCurrentEntry();
 			cd.show(this, (String) event.getNewValue());
 		}
 	}

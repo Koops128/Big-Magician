@@ -103,13 +103,13 @@ public class EditPanel extends JPanel implements Observer{
 		this.add(btnPanel, BorderLayout.SOUTH);
 	}
 	
-//	public void setCurrentEntry(Entry e) {
-//		this.current = e;
-//		type.setText(e.getType());
-//		title.setText(e.getTitle());
-//		description.setText(e.getDescription());
-//		clause.setText(e.getClause());
-//	}
+	public void setCurrentEntry() {
+		Entry current = editor.getCurrentEntry();
+		type.setText(current.getType());
+		title.setText(current.getTitle());
+		description.setText(current.getDescription());
+		clause.setText(current.getClause());
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
