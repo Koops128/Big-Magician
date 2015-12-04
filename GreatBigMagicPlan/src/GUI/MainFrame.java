@@ -5,6 +5,8 @@ package GUI;
 
 import javax.swing.JFrame;
 
+import Model.Bank;
+
 /**
  * @author Sean
  * @author Melinda Robertson
@@ -19,8 +21,9 @@ public class MainFrame extends JFrame{
 	public MainFrame() {
 		this.setTitle("Clause");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cards = new CardPanel();
-		menu = new Menu();
+		Bank editor = new Bank();
+		cards = new CardPanel(editor);
+		menu = new Menu(/*editor*/);
 		this.add(cards);
 		this.setSize(500, 500);
 		this.setVisible(true);
