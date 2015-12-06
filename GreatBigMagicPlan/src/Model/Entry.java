@@ -2,12 +2,44 @@ package Model;
 
 public class Entry {
 	
-	String myTitle, myType, myDiscription, myContent;
+	String myTitle, myType, myDescription, myContent;
 	
-	public Entry (String title, String type, String discription, String content) {
+	public Entry (String title, String type, String description, String content) {
 		myTitle = title;
 		myType = type;
-		myDiscription = discription;
+		myDescription = description;
 		myContent = content;
+	}
+
+	public void setTitle(String title) {
+		myType = title;
+	}
+	
+	public void setType(String type) {
+		myType = type;
+	}
+	
+	public void setDescription(String description) {
+		myDescription = description;
+	}
+	
+	public void setContent(String content) {
+		myContent = content;
+	}
+
+	public String getTitle() {
+		return myTitle;
+	}
+	
+	public String getType() {
+		return myType;
+	}
+	
+	public String getDescription() {
+		return myDescription;
+	}
+	
+	public String getContent() {
+		return myContent;
 	}
 }

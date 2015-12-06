@@ -95,7 +95,7 @@ public class EntryTableModel extends AbstractTableModel {
 		} else if (x == 1) {
 			return e.myType;
 		} else {
-			return e.myDiscription;
+			return e.myDescription;
 		}
 	}
 
