@@ -16,8 +16,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import Model.Editor;
+import Model.Entry;
+
 /**
  * @author Melinda Robertson
+ * @author Sean Markus
  * @version 20151125
  */
 public class EditPanel extends JPanel implements Observer{
@@ -35,17 +39,21 @@ public class EditPanel extends JPanel implements Observer{
 	
 	private JTextArea clause;
 	
-	//private ObservableEditor editor;
-	//private Entry current;
+	private Editor editor;
+	private Entry current;
 	
-	public EditPanel(/*ObservableEditor editor*/) {
+	public EditPanel(/*Editor editor*/) {
 		//editor.registerListener(this);
-		//this.editor = editor;
+		this.editor = editor;
 		this.setLayout(new BorderLayout());
 		buildEditPanel();
 		buildBtnPanel();
 	}
 	
+	/**
+	 * Adds the component with a JTextArea for
+	 * each 4 Entry fields
+	 */
 	public void buildEditPanel() {
 		//TODO what layout should be used?
 		JPanel edPanel = new JPanel();
@@ -81,12 +89,11 @@ public class EditPanel extends JPanel implements Observer{
 		JPanel btnPanel = new JPanel();
 		JButton save = new JButton("Save");
 		save.addActionListener((event)->{
-			//TODO have the editor save all the things
-//			current.setType(type.getText());
-//			current.setTitle(title.getText());
-//			current.setDescription(description.getText());
-//			current.setClause(clause.getText());
-//			editor.changeEntry(current);
+			current.setType(type.getText());
+			current.setTitle(title.getText());
+			current.setDescription(description.getText());
+			current.setContent(clause.getText());
+			//editor.changeEntry(current);
 			this.firePropertyChange(
 					CardPanel.PROPERTYNAME, CardPanel.EDITNAME, CardPanel.MAINNAME);
 		});
@@ -103,13 +110,19 @@ public class EditPanel extends JPanel implements Observer{
 		this.add(btnPanel, BorderLayout.SOUTH);
 	}
 	
-//	public void setCurrentEntry(Entry e) {
-//		this.current = e;
-//		type.setText(e.getType());
-//		title.setText(e.getTitle());
-//		description.setText(e.getDescription());
-//		clause.setText(e.getClause());
-//	}
+	/**
+	 * Takes in the Entry that will be edited, this method will be called by something?
+	 * Displays the fields in the TextAreas.
+	 * 
+	 * @param e The Entry
+	 */
+	public void setCurrentEntry(Entry e) {
+		this.current = e;
+		type.setText(e.getType());
+		title.setText(e.getTitle());
+		description.setText(e.getDescription());
+		clause.setText(e.getContent());
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
