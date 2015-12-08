@@ -32,6 +32,10 @@ public class MainPanel extends JPanel implements Observer {
 	
 	private JTextArea clause;
 	
+	private JButton edit;
+	private JButton use;
+	private JButton delete;
+	
 	private Editor editor;
 	
 	public MainPanel(Editor editor) {
@@ -43,6 +47,7 @@ public class MainPanel extends JPanel implements Observer {
 	
 	public void buildTablePanel() {
 		JPanel tblPanel = new JPanel();
+		tblPanel.setLayout(new BorderLayout());
 		table = new JTable();
 		table.setModel(editor.getTable());
 		JScrollPane sc = new JScrollPane(table);
@@ -51,9 +56,24 @@ public class MainPanel extends JPanel implements Observer {
 		lsm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lsm.addListSelectionListener((event)->{
 			int row = table.getSelectedRow();
-			editor.setCurrentEntry((String) table.getValueAt(row, 0));
+			if (row >= 0) {
+				editor.setCurrentEntry((String) table.getValueAt(row, 0));
+				clause.setText(editor.getCurrentEntry().getDescription());
+				edit.setEnabled(true);
+				use.setEnabled(true);
+				delete.setEnabled(true);
+			} else {
+				editor.setCurrentEntry(null);
+				clause.setText("");
+				edit.setEnabled(false);
+				use.setEnabled(false);
+				delete.setEnabled(false);
+			}
 		});
-		tblPanel.add(sc);
+		tblPanel.add(sc, BorderLayout.CENTER);
+		clause = new JTextArea();
+		clause.setEditable(false);
+		tblPanel.add(clause, BorderLayout.SOUTH);
 		this.add(tblPanel, BorderLayout.CENTER);
 	}
 	
@@ -65,7 +85,8 @@ public class MainPanel extends JPanel implements Observer {
 	 */
 	public void buildBtnPanel() {
 		JPanel btnPanel = new JPanel();
-		JButton use = new JButton("Use Clause");
+		use = new JButton("Use Clause");
+		use.setEnabled(false);
 		use.addActionListener((event)->{
 			//Reference: http://www.avajava.com/tutorials/lessons/how-do-i-run-another-application-from-java.html
 			//@author Deron Eriksson
@@ -77,7 +98,8 @@ public class MainPanel extends JPanel implements Observer {
 			}
 		});
 		
-		JButton edit = new JButton("Edit Clause");
+		edit = new JButton("Edit Clause");
+		edit.setEnabled(false);
 		edit.addActionListener((event)->{
 			//TODO set the Entry that is being edited
 			//get the number of the Entry from the JTable
@@ -87,7 +109,8 @@ public class MainPanel extends JPanel implements Observer {
 					CardPanel.PROPERTYNAME, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
 		
-		JButton delete = new JButton("Delete Clause");
+		delete = new JButton("Delete Clause");
+		delete.setEnabled(false);
 		delete.addActionListener((event)->{
 			//TODO ask editor to delete Entry
 			//get the number of the Entry from the JTable
