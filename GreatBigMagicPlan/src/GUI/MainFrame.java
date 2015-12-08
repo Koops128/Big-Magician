@@ -25,7 +25,8 @@ public class MainFrame extends JFrame{
 		Editor editor = new Editor();
 		cards = new CardPanel(editor);
 		menu = new Menu(/*editor*/);
-		this.add(cards);
+		this.setJMenuBar(menu);
+		this.setContentPane(cards);
 		this.setSize(500, 500);
 		this.setVisible(true);
 	}
