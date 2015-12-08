@@ -13,8 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 
-import Model.Bank;
+import Model.Editor;
 
 /**
  * @author Melinda Robertson
@@ -31,9 +32,9 @@ public class MainPanel extends JPanel implements Observer {
 	
 	private JTextArea clause;
 	
-	private Bank editor;
+	private Editor editor;
 	
-	public MainPanel(Bank editor) {
+	public MainPanel(Editor editor) {
 		this.editor = editor;
 		this.setLayout(new BorderLayout());
 		buildTablePanel();
@@ -43,8 +44,15 @@ public class MainPanel extends JPanel implements Observer {
 	public void buildTablePanel() {
 		JPanel tblPanel = new JPanel();
 		table = new JTable();
-		//table.setModel(editor.getModel("All"));
+		table.setModel(editor.getTable());
 		JScrollPane sc = new JScrollPane(table);
+		
+		ListSelectionModel lsm = table.getSelectionModel();
+		lsm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		lsm.addListSelectionListener((event)->{
+			int row = table.getSelectedRow();
+			editor.setCurrentEntry((String) table.getValueAt(row, 0));
+		});
 		tblPanel.add(sc);
 		this.add(tblPanel, BorderLayout.CENTER);
 	}

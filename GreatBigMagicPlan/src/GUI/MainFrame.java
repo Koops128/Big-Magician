@@ -5,10 +5,11 @@ package GUI;
 
 import javax.swing.JFrame;
 
-import Model.Bank;
+import Model.Editor;
 
 /**
- * @author Sean
+ * Starts the program.
+ * @author Sean Markus
  * @author Melinda Robertson
  * @version 20151203
  */
@@ -21,7 +22,7 @@ public class MainFrame extends JFrame{
 	public MainFrame() {
 		this.setTitle("Clause");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Bank editor = new Bank();
+		Editor editor = new Editor();
 		cards = new CardPanel(editor);
 		menu = new Menu(/*editor*/);
 		this.add(cards);

@@ -18,7 +18,7 @@ import javax.swing.table.TableModel;
 public class Bank {
 	
 	public static final String USERNAME = "root";
-	public static final String PASSWORD = "**********";
+	public static final String PASSWORD = "";
 	
 	//private List<Entry> myEntries;
 	private TableModel myEntries;
@@ -111,7 +111,7 @@ public class Bank {
 				preparedStatement = conn.prepareStatement(sql);
 				preparedStatement.setString(1, e.myTitle);
 				preparedStatement.setString(2, e.myType);
-				preparedStatement.setString(3, e.myDiscription);
+				preparedStatement.setString(3, e.getDescription());
 				preparedStatement.setString(4, e.myContent);
 				preparedStatement.executeUpdate();
 				System.out.println("New Entry added with title: " + e.myTitle);
@@ -130,20 +130,20 @@ public class Bank {
 		return myEntries;
 	}
 		
-	public static void main(String[] args) {
-		System.out.println("Start Bank Test:");
-		Bank b = new Bank();
-		Entry newEntry = new Entry ("New Entry", "Sample", "a test for the bank", "Why are you reading this? GET BACK TO CODE!!!!!!!!1!!");
-		Entry newEntry2 = new Entry ("New Entry 2", "Sample", "another test for the bank", "Seriously why are you still reading these? Like wasting time much??");
-		Entry newEntry3 = new Entry ("New Entry 3", "Sample", "yet another test for the bank", "Im not even gonna dignify that you're still reading these...");
-		Entry newEntry2b = new Entry ("New Entry 2", "Sample", "test test testy test", "ohhhhh i bet you didnt expect that! duplicate Title son!");
-		b.addEntry(newEntry);
-		b.addEntry(newEntry2);
-		b.addEntry(newEntry);
-		b.addEntry(newEntry2b);
-		b.deleteEntry(newEntry);
-		b.deleteEntry(newEntry2);
-		b.deleteEntry(newEntry3);
-		System.out.println("End Bank Test:");
-	}
+//	public static void main(String[] args) {
+//		System.out.println("Start Bank Test:");
+//		Bank b = new Bank();
+//		Entry newEntry = new Entry ("New Entry", "Sample", "a test for the bank", "Why are you reading this? GET BACK TO CODE!!!!!!!!1!!");
+//		Entry newEntry2 = new Entry ("New Entry 2", "Sample", "another test for the bank", "Seriously why are you still reading these? Like wasting time much??");
+//		Entry newEntry3 = new Entry ("New Entry 3", "Sample", "yet another test for the bank", "Im not even gonna dignify that you're still reading these...");
+//		Entry newEntry2b = new Entry ("New Entry 2", "Sample", "test test testy test", "ohhhhh i bet you didnt expect that! duplicate Title son!");
+//		b.addEntry(newEntry);
+//		b.addEntry(newEntry2);
+//		b.addEntry(newEntry);
+//		b.addEntry(newEntry2b);
+//		b.deleteEntry(newEntry);
+//		b.deleteEntry(newEntry2);
+//		b.deleteEntry(newEntry3);
+//		System.out.println("End Bank Test:");
+//	}
 }
