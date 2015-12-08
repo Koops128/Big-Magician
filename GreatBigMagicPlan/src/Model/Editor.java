@@ -20,11 +20,16 @@ public class Editor {
 		myBank.deleteEntry(theEntry);
 		
 	}
-	public Entry getCurrentEntry(){
+	public Entry getCurrentEntry() throws NullPointerException {
+		if (myCurrentEntry == null) throw new NullPointerException();
 		return myCurrentEntry;
 	}
 	
 	public void setCurrentEntry(String theEntry) {
+		if (theEntry == null) {
+			myCurrentEntry = null;
+			return;
+		}
 		myCurrentEntry = myBank.getEntry(theEntry);
 	}
 	
