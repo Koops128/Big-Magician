@@ -25,7 +25,9 @@ public class Menu extends JMenuBar {
 		buildFileMenu();
 		buildFilterMenu();
 		buildAboutMenu();
-		//TODO
+		this.add(fileMenu);
+		this.add(filterMenu);
+		this.add(aboutMenu);
 	}
 	
 	public void buildFileMenu() {	
@@ -34,6 +36,10 @@ public class Menu extends JMenuBar {
 		JMenuItem removeEntry = new JMenuItem("Remove Entry");
 		JMenuItem editEntry = new JMenuItem("Edit Entry");
 		JMenuItem exit = new JMenuItem("Exit");
+		fileMenu.add(addentry);
+		fileMenu.add(removeEntry);
+		fileMenu.add(editEntry);
+		fileMenu.add(exit);
 	}
 	
 	public void buildFilterMenu() {
@@ -63,7 +69,12 @@ public class Menu extends JMenuBar {
 		aboutMenu = new JMenu("About");
 		JMenuItem about = new JMenuItem("About BigMagician");
 		about.addActionListener((event)->{
-			
+			try {
+				new AboutFrame();
+			} catch (Exception e) {
+				System.out.println("Oh noes");
+			}
 		});
+		aboutMenu.add(about);
 	}
 }

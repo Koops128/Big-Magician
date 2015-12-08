@@ -42,7 +42,7 @@ public class EditPanel extends JPanel implements Observer{
 	private Editor editor;
 	private Entry current;
 	
-	public EditPanel(/*Editor editor*/) {
+	public EditPanel(Editor editor) {
 		//editor.registerListener(this);
 		this.editor = editor;
 		this.setLayout(new BorderLayout());
@@ -116,12 +116,12 @@ public class EditPanel extends JPanel implements Observer{
 	 * 
 	 * @param e The Entry
 	 */
-	public void setCurrentEntry(Entry e) {
-		this.current = e;
-		type.setText(e.getType());
-		title.setText(e.getTitle());
-		description.setText(e.getDescription());
-		clause.setText(e.getContent());
+	public void setCurrentEntry() {
+		this.current = editor.getCurrentEntry();
+		type.setText(current.getType());
+		title.setText(current.getTitle());
+		description.setText(current.getDescription());
+		clause.setText(current.getContent());
 	}
 
 	@Override

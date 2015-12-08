@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
 
-import Model.Bank;
+import Model.Editor;
 
 /**
  * @author Melinda Robertson
@@ -22,11 +22,11 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	private EditPanel edit;
 	public final static String EDITNAME = "Edit View";
 	
-	public CardPanel(Bank editor) {
+	public CardPanel(Editor editor) {
 		this.setLayout(new CardLayout());
 		
 		main = new MainPanel(editor);
-		edit = new EditPanel(/*editor*/);
+		edit = new EditPanel(editor);
 		
 		main.addPropertyChangeListener("switch", this);
 		edit.addPropertyChangeListener("switch", this);
@@ -40,6 +40,7 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 		if (PROPERTYNAME.equals(event.getPropertyName())) {
 			CardLayout cd = (CardLayout) this.getLayout();
 			cd.show(this, (String) event.getNewValue());
+			edit.setCurrentEntry();
 		}
 	}
 }

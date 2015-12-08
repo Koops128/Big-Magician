@@ -89,10 +89,10 @@ public class EntryTableModel extends AbstractTableModel {
 	 */
 	@Override
 	public Object getValueAt(int x, int y) {
-		Entry e = myList.get(y);
-		if (x == 0) {
+		Entry e = myList.get(x);
+		if (y == 0) {
 			return e.myTitle;
-		} else if (x == 1) {
+		} else if (y == 1) {
 			return e.myType;
 		} else {
 			return e.myDescription;

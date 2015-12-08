@@ -22,7 +22,6 @@ public class Editor {
 	}
 	public Entry getCurrentEntry(){
 		return myCurrentEntry;
-		
 	}
 	
 	public void setCurrentEntry(String theEntry) {
