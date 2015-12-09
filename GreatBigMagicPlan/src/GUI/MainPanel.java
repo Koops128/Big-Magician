@@ -4,11 +4,17 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,7 +36,7 @@ public class MainPanel extends JPanel implements Observer {
 
 	private JTable table;
 	
-	private JTextArea clause;
+	private JTextArea desc;
 	
 	private JButton edit;
 	private JButton use;
@@ -47,33 +53,61 @@ public class MainPanel extends JPanel implements Observer {
 	
 	public void buildTablePanel() {
 		JPanel tblPanel = new JPanel();
-		tblPanel.setLayout(new BorderLayout());
+		GridBagLayout gb = new GridBagLayout();
+		gb.rowHeights = new int[]{MainFrame.HEIGHT/2,50};
+		tblPanel.setLayout(gb);
 		table = new JTable();
 		table.setModel(editor.getTable());
 		JScrollPane sc = new JScrollPane(table);
-		
+		sc.setMinimumSize(new Dimension(MainFrame.WIDTH-10,
+				MainFrame.HEIGHT/2+100));
 		ListSelectionModel lsm = table.getSelectionModel();
 		lsm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lsm.addListSelectionListener((event)->{
 			int row = table.getSelectedRow();
 			if (row >= 0) {
 				editor.setCurrentEntry((String) table.getValueAt(row, 0));
-				clause.setText(editor.getCurrentEntry().getDescription());
+				desc.setText(editor.getCurrentEntry().getDescription());
 				edit.setEnabled(true);
 				use.setEnabled(true);
 				delete.setEnabled(true);
 			} else {
 				editor.setCurrentEntry(null);
-				clause.setText("");
+				desc.setText("");
 				edit.setEnabled(false);
 				use.setEnabled(false);
 				delete.setEnabled(false);
 			}
 		});
-		tblPanel.add(sc, BorderLayout.CENTER);
-		clause = new JTextArea();
-		clause.setEditable(false);
-		tblPanel.add(clause, BorderLayout.SOUTH);
+		
+		//------------------GRIDBAG THINGYS------------------
+		GridBagConstraints gb_sc = new GridBagConstraints();
+		gb_sc.gridx = 0;
+		gb_sc.gridy = 0;
+		gb_sc.fill = GridBagConstraints.HORIZONTAL;
+		gb_sc.weightx = 1;
+		gb_sc.weighty = 1;
+		
+		GridBagConstraints gb_lbl = new GridBagConstraints();
+		gb_lbl.gridx = 0;
+		gb_lbl.gridy = 1;
+		
+		GridBagConstraints gb_desc = new GridBagConstraints();
+		gb_desc.gridx = 0;
+		gb_desc.gridy = 2;
+		gb_desc.fill = GridBagConstraints.BOTH;
+		
+		
+		desc = new JTextArea();
+		desc.setEditable(false);
+		desc.setMinimumSize(new Dimension(MainFrame.WIDTH-10,
+				(int) (MainFrame.HEIGHT-sc.getMinimumSize().getHeight())));
+		JLabel lbl_desc = new JLabel("Description");
+		lbl_desc.setLabelFor(desc);
+		
+		tblPanel.add(sc,gb_sc);
+		tblPanel.add(lbl_desc,gb_lbl);
+		tblPanel.add(desc,gb_desc);
 		this.add(tblPanel, BorderLayout.CENTER);
 	}
 	

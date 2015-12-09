@@ -4,6 +4,7 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -76,20 +77,23 @@ public class EditPanel extends JPanel implements Observer{
 		clause.setLineWrap(true);
 		clause.setWrapStyleWord(true);
 		JScrollPane sc = new JScrollPane(clause);
+		clause.setMinimumSize(new Dimension(MainFrame.WIDTH-10-lbl_clause.getWidth(),
+				MainFrame.HEIGHT/2-titlepanel.getHeight()-lbl_desc.getHeight()));
+		sc.setMinimumSize(clause.getMinimumSize());
+		sc.setPreferredSize(clause.getMinimumSize());
 		JSeparator sep = new JSeparator();
 		Insets in = new Insets(5,5,5,5);
 		//These are the first four fields for the GridBagConstraints constructor
 		//gridx,gridy,gridwidth,gridheight
 		GridBagConstraints ctitle = new GridBagConstraints(0, 1, 1, 1, 1, 0,
-				GridBagConstraints.BASELINE_LEADING, 0,
-				new Insets(0, 5, 0, 5), 0, 0);
+				GridBagConstraints.NORTHWEST, 0, new Insets(0, 5, 0, 5), 0, 0);
 		GridBagConstraints ctype = new GridBagConstraints(4, 1, 1, 1, 0, 0,
 				GridBagConstraints.BASELINE_TRAILING, 0, new Insets(0, 5, 0, 5),
 				0, 0);
 		GridBagConstraints cdesc = new GridBagConstraints(1, 3, 4, 1, 0, 0,
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL,
 				in,	0, 0);
-		GridBagConstraints cclause = new GridBagConstraints(1, 4, 4, 2, 1, 0,
+		GridBagConstraints cclause = new GridBagConstraints(1, 4, 4, 10, 1, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH,
 				in, 0, 0);
 		GridBagConstraints csep = new GridBagConstraints(0, 2, 8, 1, 0, 0,
@@ -97,14 +101,11 @@ public class EditPanel extends JPanel implements Observer{
 				new Insets(5, 0, 5, 0), 0, 0);
 		// -----------------------LABEL CONTRAINTS---------------------------
 		GridBagConstraints clbltitle = new GridBagConstraints(0, 0, 1, 1, 0, 0,
-				GridBagConstraints.BASELINE_LEADING, 0,
-				new Insets(0, 5, 0, 5), 0, 0);
+				GridBagConstraints.NORTHWEST, 0, in, 0, 0);
 		GridBagConstraints clbltype = new GridBagConstraints(4, 0, 1, 1, 0, 0,
-				GridBagConstraints.BASELINE_TRAILING, 0, new Insets(0, 5, 0, 5),
-				0, 0);
+				GridBagConstraints.BASELINE_TRAILING, 0, in, 0, 0);
 		GridBagConstraints clbldesc = new GridBagConstraints(0, 3, 1, 1, 0, 0,
-				GridBagConstraints.BASELINE_LEADING, 0, in,
-				0, 0);
+				GridBagConstraints.NORTHWEST, 0, in,	0, 0);
 		GridBagConstraints clblclause = new GridBagConstraints(0, 4, 1, 1, 0,
 				0, GridBagConstraints.BASELINE_LEADING, 0, in, 0, 0);
 		titlepanel.add(title, ctitle);

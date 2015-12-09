@@ -63,9 +63,9 @@ import javax.swing.JTextField;
  		});
  		main.add(btn);
  		this.add(main);
- 
- 		Dimension d = main.getPreferredSize();
- 		this.setBounds(200, 200, (int) d.getWidth() + 25, (int) d.getHeight() + 50);
+ 		int x = MainFrame.x + ((MainFrame.WIDTH / 4)-(this.getWidth()/2));
+ 		int y = MainFrame.y + ((MainFrame.HEIGHT / 4)-(this.getHeight()/2));
+ 		resetSize(x, y);
  		this.setVisible(true);
  	}
  	
@@ -106,8 +106,12 @@ import javax.swing.JTextField;
  	 */
  	public void addNewLabel(String name, String description) {
  		main.add(createLabel(name, description));
- 		Dimension d = main.getPreferredSize();
- 		this.setBounds(200, 200, (int) d.getWidth() + 25, (int) d.getHeight() + 50);
+ 		resetSize(this.getX(), this.getY());
  		this.setVisible(true);
+ 	}
+ 	
+ 	private void resetSize(int x, int y) {
+ 		Dimension d = main.getPreferredSize();
+ 		this.setBounds(x,y, (int) d.getWidth() + 25, (int) d.getHeight() + 50);
  	}
 }
