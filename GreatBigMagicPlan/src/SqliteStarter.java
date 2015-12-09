@@ -1,12 +1,13 @@
 
+
 	import java.sql.Connection;
 	import java.sql.DriverManager;
 	import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
 	import java.sql.Statement;
 
-	public class Sqlitetester {
-	    public static void main(String[] args) throws Exception {
+	public class SqliteStarter {
+	    public void main(String[] a) throws Exception {
 	        Class.forName("org.sqlite.JDBC");
 	        Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
 	        Statement stat = conn.createStatement();
