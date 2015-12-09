@@ -36,7 +36,6 @@ public class Bank {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			createConnection();
 		}
 		try {
 			this.conn = DriverManager.getConnection("jdbc:sqlite:test.db");
