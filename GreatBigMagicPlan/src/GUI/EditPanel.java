@@ -42,7 +42,7 @@ public class EditPanel extends JPanel implements Observer{
 	private JTextArea clause;
 	
 	private Editor editor;
-	private Entry current;
+	//private Entry current;
 	
 	public EditPanel(Editor editor) {
 		//editor.registerListener(this);
@@ -130,11 +130,12 @@ public class EditPanel extends JPanel implements Observer{
 		JPanel btnPanel = new JPanel();
 		JButton save = new JButton("Save");
 		save.addActionListener((event)->{
-			current.setType(type.getText());
-			current.setTitle(title.getText());
-			current.setDescription(description.getText());
-			current.setContent(clause.getText());
-			//editor.changeEntry(current);
+//			current.setType(type.getText());
+//			current.setTitle(title.getText());
+//			current.setDescription(description.getText());
+//			current.setContent(clause.getText());
+			//TODO send string data to editor to effect change
+			//editor.changeEntry();
 			this.firePropertyChange(
 					CardPanel.PROPERTYNAME, CardPanel.EDITNAME, CardPanel.MAINNAME);
 		});
@@ -158,7 +159,7 @@ public class EditPanel extends JPanel implements Observer{
 	 * @param e The Entry
 	 */
 	public void setCurrentEntry() {
-		this.current = editor.getCurrentEntry();
+		Entry current = editor.getCurrentEntry();
 		type.setText(current.getType());
 		title.setText(current.getTitle());
 		description.setText(current.getDescription());
