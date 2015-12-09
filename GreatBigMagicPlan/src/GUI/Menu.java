@@ -7,6 +7,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
 /**
@@ -33,9 +34,36 @@ public class Menu extends JMenuBar {
 	public void buildFileMenu() {	
 		fileMenu = new JMenu("File");
 		JMenuItem addentry = new JMenuItem("Add Entry");
+		addentry.addActionListener((event)->{
+
+				System.out.println("you ADDED an ITEM");
+			
+		});
+
 		JMenuItem removeEntry = new JMenuItem("Remove Entry");
+		removeEntry.addActionListener((event)->{
+
+				System.out.println("oh great now you REMOVED ONE");
+			
+		});
+
 		JMenuItem editEntry = new JMenuItem("Edit Entry");
+		editEntry.addActionListener((event)->{
+
+				System.out.println("EDIT? WHAT WAS WRONG WITH IT "
+						+ "THE FIRST TIME??");
+			
+		});
 		JMenuItem exit = new JMenuItem("Exit");
+		exit.addActionListener((event)->{
+			int result = JOptionPane.showConfirmDialog(null,
+					"Are you sure you want to quit?", 
+					"Confirm Quit", JOptionPane.YES_NO_OPTION);
+			if (result == 0) System.exit(0);
+			
+
+		});
+
 		fileMenu.add(addentry);
 		fileMenu.add(removeEntry);
 		fileMenu.add(editEntry);
