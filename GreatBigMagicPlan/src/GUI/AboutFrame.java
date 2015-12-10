@@ -27,6 +27,13 @@ import javax.swing.JTextField;
  	private static final long serialVersionUID =  2902400071493857246L;
  	
  	private JPanel main;
+ 	
+ 	private final String[][] information = new String[][] {
+ 			{"Copyright","License",""},
+ 			{"2015", "This program is licensed under General Public License, version 3 GPL-3.0.",""}
+ 	};
+ 	
+ 	private int counter = 0;
  
  	/**
  	 * Sets up the frame with a main panel that holds multiple JPanels
@@ -43,23 +50,22 @@ import javax.swing.JTextField;
  		main.add(lbl);
  		main.add(createLabel("Melinda Robertson", "The prettiest princess in all the realm."));
  		main.add(createLabel("Sean Markus", "The Old Man by the coding sea."));
- 		main.add(createLabel("Ash", "The Fool."));
+ 		main.add(createLabel("Ash", "The Fool who followed him."));
  		main.add(createLabel("Matthew Cles", "The Doctor will see your code now."));
  		main.add(createLabel("Paul Gray", "The Potentate of Feather and Stone."));
  		JButton btn = new JButton("More Things!");
  		btn.addActionListener((event)-> {
- 			Random r = new Random();
- 			int stop = r.nextInt(20) + 1;
  			String name = "";
- 			for (int i = 0; i < stop; i++) {
- 				name += (char) (r.nextInt(26) + 97);
- 			}
  			String desc = "";
- 			stop = r.nextInt(82) + 1;
- 			for (int i = 0; i < stop; i++) {
- 				desc += (char) (r.nextInt(26) + 97);
+ 			if(counter < information[0].length) {
+ 				name = information[0][counter];
+ 				desc = information[1][counter];
+ 				counter ++;
+ 				addNewLabel(name,desc);
+ 			} else {
+ 				addNewLabel("Sorry", "That's all.");
  			}
- 			addNewLabel(name,desc);
+ 			
  		});
  		main.add(btn);
  		this.add(main);

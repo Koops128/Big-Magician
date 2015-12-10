@@ -27,7 +27,7 @@ import Model.Editor;
  * @author Melinda Robertson
  * @version 20151125
  */
-public class MainPanel extends JPanel implements Observer {
+public class MainPanel extends JPanel{
 
 	/**
 	 * Super Serial
@@ -57,7 +57,7 @@ public class MainPanel extends JPanel implements Observer {
 		gb.rowHeights = new int[]{MainFrame.HEIGHT/2,50};
 		tblPanel.setLayout(gb);
 		table = new JTable();
-		table.setModel(editor.getTable());
+		resetTable();
 		JScrollPane sc = new JScrollPane(table);
 		sc.setMinimumSize(new Dimension(MainFrame.WIDTH-10,
 				MainFrame.HEIGHT/2+100));
@@ -158,17 +158,9 @@ public class MainPanel extends JPanel implements Observer {
 		
 		this.add(btnPanel, BorderLayout.SOUTH);
 	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO must have these classes created
-		//assumes editor returns a TableModel
-//		if (o instanceof ObservableEditor) {
-//			if (arg instanceof TableModel) {
-//				table.setModel((TableModel) arg);
-//			}
-//		}
-		
+	
+	public void resetTable() {
+		this.table.setModel(editor.getTable());
 	}
 	
 }

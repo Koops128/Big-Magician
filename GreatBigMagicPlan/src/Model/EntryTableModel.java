@@ -37,7 +37,7 @@ public class EntryTableModel extends AbstractTableModel {
 
     public void remove(String s) {
         for (Entry e : myList) {
-            if (e.myTitle.equals(s)) {
+            if (e.getTitle().equals(s)) {
                 myList.remove(e);
                 return;
             }
@@ -50,7 +50,7 @@ public class EntryTableModel extends AbstractTableModel {
     
     public boolean contains(String s) {
         for (Entry e : myList) {
-            if (e.myTitle.equals(s))
+            if (e.getTitle().equals(s))
                 return true;
         }
         return false;
@@ -58,7 +58,7 @@ public class EntryTableModel extends AbstractTableModel {
     
     public Entry get(String s) {
         for (Entry e : myList) {
-            if (e.myTitle.equals(s))
+            if (e.getTitle().equals(s))
                 return e;
         }
         return null;
@@ -93,11 +93,11 @@ public class EntryTableModel extends AbstractTableModel {
     public Object getValueAt(int x, int y) {
         Entry e = myList.get(x);
         if (y == 0) {
-            return e.myTitle;
+            return e.getTitle();
         } else if (y == 1) {
-            return e.myType;
+            return e.getType();
         } else {
-            return e.myDescription;
+            return e.getDescription();
         }
     }
 

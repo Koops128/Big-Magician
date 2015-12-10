@@ -8,8 +8,8 @@ import javax.swing.table.TableModel;
  */
 public class Editor {
 	
-	Bank myBank = new Bank();
-	Entry myCurrentEntry = null;
+	private Bank myBank = new Bank();
+	private Entry myCurrentEntry = null;
 	private boolean editing = false;
 	private boolean canEdit = false;
 	
@@ -31,6 +31,17 @@ public class Editor {
 			return;
 		}
 		myCurrentEntry = myBank.getEntry(theEntry);
+	}
+	
+	public void changeEntry(String title, String type, String desc, 
+			String content) throws NullPointerException {
+		if(myCurrentEntry == null) throw new NullPointerException();
+		myBank.deleteEntry(myCurrentEntry.getTitle());
+		myCurrentEntry.setContent(content);
+		myCurrentEntry.setDescription(desc);
+		myCurrentEntry.setTitle(title);
+		myCurrentEntry.setType(type);
+		myBank.addEntry(myCurrentEntry);
 	}
 	
 	public TableModel getTable() {

@@ -2,7 +2,7 @@ package Model;
 
 public class Entry {
 	
-	String myTitle, myType, myDescription, myContent;
+	private String myTitle, myType, myDescription, myContent;
 	
 	public Entry (String title, String type, String description, String content) {
 		myTitle = title;

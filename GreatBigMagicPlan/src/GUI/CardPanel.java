@@ -41,6 +41,7 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 			CardLayout cd = (CardLayout) this.getLayout();
 			cd.show(this, (String) event.getNewValue());
 			edit.setCurrentEntry();
+			main.resetTable();
 		}
 	}
 }

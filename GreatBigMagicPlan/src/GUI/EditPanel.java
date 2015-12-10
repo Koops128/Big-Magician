@@ -8,8 +8,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -27,7 +25,7 @@ import Model.Entry;
  * @author Sean Markus
  * @version 20151125
  */
-public class EditPanel extends JPanel implements Observer{
+public class EditPanel extends JPanel {
 	
 	/**
 	 * Super Serial
@@ -83,6 +81,8 @@ public class EditPanel extends JPanel implements Observer{
 		sc.setPreferredSize(clause.getMinimumSize());
 		JSeparator sep = new JSeparator();
 		Insets in = new Insets(5,5,5,5);
+		
+		//-------------------GRIDBAG THINGYS-----------------------------------
 		//These are the first four fields for the GridBagConstraints constructor
 		//gridx,gridy,gridwidth,gridheight
 		GridBagConstraints ctitle = new GridBagConstraints(0, 1, 1, 1, 1, 0,
@@ -108,6 +108,8 @@ public class EditPanel extends JPanel implements Observer{
 				GridBagConstraints.NORTHWEST, 0, in,	0, 0);
 		GridBagConstraints clblclause = new GridBagConstraints(0, 4, 1, 1, 0,
 				0, GridBagConstraints.BASELINE_LEADING, 0, in, 0, 0);
+		
+		//-------------ADD ALL THE THINGS------------------------------------
 		titlepanel.add(title, ctitle);
 		titlepanel.add(lbl_title,clbltitle);
 		titlepanel.add(type, ctype);
@@ -131,12 +133,13 @@ public class EditPanel extends JPanel implements Observer{
 		JPanel btnPanel = new JPanel();
 		JButton save = new JButton("Save");
 		save.addActionListener((event)->{
-//			current.setType(type.getText());
-//			current.setTitle(title.getText());
-//			current.setDescription(description.getText());
-//			current.setContent(clause.getText());
-			//TODO send string data to editor to effect change
-			//editor.changeEntry();
+			//TODO uncomment this when method added to Editor
+//			editor.changeEntry(
+//				this.title.getText(),
+//				this.type.getText(),
+//				this.description.getText(),
+//				this.clause.getText()
+//			);
 			this.firePropertyChange(
 					CardPanel.PROPERTYNAME, CardPanel.EDITNAME, CardPanel.MAINNAME);
 		});
@@ -165,17 +168,5 @@ public class EditPanel extends JPanel implements Observer{
 		title.setText(current.getTitle());
 		description.setText(current.getDescription());
 		clause.setText(current.getContent());
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO gets the current Entry to edit from
-		//the editor
-//		if (o instanceof ObservableEditor) {
-//			if (arg instanceof Entry) {
-//				setCurrentEntry(e);
-//			}
-//		}
-		
 	}
 }

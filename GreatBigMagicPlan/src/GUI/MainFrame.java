@@ -14,7 +14,7 @@ import Model.Editor;
  * Starts the program.
  * @author Sean Markus
  * @author Melinda Robertson
- * @version 20151203
+ * @version 20151209
  */
 public class MainFrame extends JFrame{
 

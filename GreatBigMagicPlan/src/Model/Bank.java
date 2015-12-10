@@ -112,7 +112,7 @@ public class Bank {
     
     //Deletes an entry based on its Title
     public void deleteEntry(Entry e) {
-        deleteEntry(e.myTitle);
+        deleteEntry(e.getTitle());
     }
     
     //Deletes an entry in the bank with the passed Title
@@ -134,10 +134,10 @@ public class Bank {
     //Adds a new entry to the bank, returns false if the passed entry was invalid
     public boolean addEntry(Entry e) {
         if (((EntryTableModel) myEntries).contains(e)) {
-            System.out.println("Entry: " + e.myTitle + " already in the Bank"); //TODO REMOVE AFTER TESTING
+            System.out.println("Entry: " + e.getTitle() + " already in the Bank"); //TODO REMOVE AFTER TESTING
             return false;
-        } else if (((EntryTableModel) myEntries).contains(e.myTitle)) {
-            System.out.println("Another Entry already has Title: " + e.myTitle); //TODO REMOVE AFTER TESTING    
+        } else if (((EntryTableModel) myEntries).contains(e.getTitle())) {
+            System.out.println("Another Entry already has Title: " + e.getTitle()); //TODO REMOVE AFTER TESTING    
             return false;
         } else {
             ((EntryTableModel) myEntries).add(e);
@@ -145,12 +145,12 @@ public class Bank {
             PreparedStatement preparedStatement = null;
             try {
                 preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setString(1, e.myTitle);
-                preparedStatement.setString(2, e.myType);
+                preparedStatement.setString(1, e.getTitle());
+                preparedStatement.setString(2, e.getType());
                 preparedStatement.setString(3, e.getDescription());
-                preparedStatement.setString(4, e.myContent);
+                preparedStatement.setString(4, e.getContent());
                 preparedStatement.executeUpdate();
-                System.out.println("New Entry added with title: " + e.myTitle); //TODO REMOVE AFTER TESTING
+                System.out.println("New Entry added with title: " + e.getTitle()); //TODO REMOVE AFTER TESTING
             } catch (SQLException e1) {
                 System.out.println(e1);
                 e1.printStackTrace();
@@ -166,8 +166,8 @@ public class Bank {
     
     //modifies an old entry to match the 
     public boolean modifyEntry(Entry newEntry, Entry oldEntry) {
-        if (((EntryTableModel) myEntries).contains(newEntry.myTitle)) {
-            System.out.println("File not modified, Naming Conflict - Title: " + newEntry.myTitle + " is already in use"); //TODO REMOVE AFTER TESTING
+        if (((EntryTableModel) myEntries).contains(newEntry.getTitle())) {
+            System.out.println("File not modified, Naming Conflict - Title: " + newEntry.getTitle() + " is already in use"); //TODO REMOVE AFTER TESTING
             return false; 
         } else {
             ((EntryTableModel) myEntries).remove(oldEntry);
@@ -176,11 +176,11 @@ public class Bank {
             PreparedStatement preparedStatement = null;
             try {
                 preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setString(1, newEntry.myTitle);
-                preparedStatement.setString(2, newEntry.myType);
-                preparedStatement.setString(3, newEntry.myDescription);
-                preparedStatement.setString(4, newEntry.myContent);
-                preparedStatement.setString(5, newEntry.myTitle);
+                preparedStatement.setString(1, newEntry.getTitle());
+                preparedStatement.setString(2, newEntry.getType());
+                preparedStatement.setString(3, newEntry.getDescription());
+                preparedStatement.setString(4, newEntry.getContent());
+                preparedStatement.setString(5, newEntry.getTitle());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 System.out.println(e);
