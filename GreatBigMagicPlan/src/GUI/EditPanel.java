@@ -134,12 +134,12 @@ public class EditPanel extends JPanel {
 		JButton save = new JButton("Save");
 		save.addActionListener((event)->{
 			//TODO uncomment this when method added to Editor
-//			editor.changeEntry(
-//				this.title.getText(),
-//				this.type.getText(),
-//				this.description.getText(),
-//				this.clause.getText()
-//			);
+			editor.changeEntry(
+				this.title.getText(),
+				this.type.getText(),
+				this.description.getText(),
+				this.clause.getText()
+			);
 			this.firePropertyChange(
 					CardPanel.PROPERTYNAME, CardPanel.EDITNAME, CardPanel.MAINNAME);
 		});
