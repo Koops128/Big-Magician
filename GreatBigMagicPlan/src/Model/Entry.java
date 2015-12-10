@@ -12,7 +12,7 @@ public class Entry {
 	}
 
 	public void setTitle(String title) {
-		myType = title;
+		myTitle = title;
 	}
 	
 	public void setType(String type) {
