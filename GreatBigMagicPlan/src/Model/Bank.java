@@ -1,8 +1,3 @@
-/**
- * @author Matthew Cles
- * @version 2.0
- */
-
 package Model;
 
 import java.sql.Connection;
@@ -16,14 +11,26 @@ import java.util.List;
 
 import javax.swing.table.TableModel;
 
+/**
+ * This Class is responsible for connecting to the Database and providing the 
+ * Editor the entries that it needs. Data is stored in the Database and when the program
+ * runs, the data entries that are stored there are loaded into a TableModel for storage 
+ * and to populate the GUI with a table. Entries that are added, removed, or otherwise 
+ * modified are done so both in the TableModel and the Database.
+ * 
+ * @author Matthew Cles
+ * @version 2.3
+ */
 public class Bank {
     
-    //the entries the are stored in the bank
+    /**The entries the are stored in the bank.*/
     private TableModel myEntries;
-    //the connection to the database
+    /**The connection to the database.*/
     private Connection conn;
     
-    //constructor
+    /**
+     * The Constructor
+     */
     public Bank() {
         myEntries = new EntryTableModel();
         conn = null;
@@ -31,7 +38,9 @@ public class Bank {
         loadEntries();
     }
 
-    //creates a connection to the database
+    /**
+     * Creates a connection to the database.
+     */
     public void createConnection() {
         System.out.println("opening connection"); //TODO REMOVE AFTER TESTING
         try {
@@ -56,7 +65,11 @@ public class Bank {
         }
     }
     
-    //creates the local database if the database is missing
+    /**
+     * creates the local database if the database is missing.
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public void createDatabase() throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
         Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
@@ -77,7 +90,9 @@ public class Bank {
         conn.close();
     }
     
-    //loads all data from the database and loads it into the Bank
+    /**
+     * Loads all data from the database and loads it into the Bank.
+     */
     private void loadEntries() {
         Statement stmt = null;
         String query = "select Title, Type, Description, Content "
@@ -110,12 +125,18 @@ public class Bank {
         }       
     }
     
-    //Deletes an entry based on its Title
+    /**
+     * Deletes an entry based on its Title.
+     * @param e The entry that is to be deleted
+     */
     public void deleteEntry(Entry e) {
         deleteEntry(e.getTitle());
     }
     
-    //Deletes an entry in the bank with the passed Title
+    /**
+     * Deletes an entry in the bank with the passed Title.
+     * @param s The String that represents the Title of the Entry to be deleted 
+     */
     public void deleteEntry(String s) {
         ((EntryTableModel) myEntries).remove(s);
         PreparedStatement stmt = null;
@@ -131,7 +152,11 @@ public class Bank {
         }
     }
     
-    //Adds a new entry to the bank, returns false if the passed entry was invalid
+    /**
+     * Adds a new entry to the bank.
+     * @param e The new entry to be added
+     * @return returns false if the passed entry was invalid
+     */
     public boolean addEntry(Entry e) {
         if (((EntryTableModel) myEntries).contains(e)) {
             System.out.println("Entry: " + e.getTitle() + " already in the Bank"); //TODO REMOVE AFTER TESTING
@@ -159,12 +184,21 @@ public class Bank {
         }
     }
     
-    //returns the entry with the passed string as its title
+    /**
+     * returns the entry with the passed string as its title.
+     * @param x The String Title of the Entry to grab
+     * @return The Entry with the given Title
+     */
     public Entry getEntry(String x) {
         return ((EntryTableModel) myEntries).get(x);
     }
     
-    //modifies an old entry to match the 
+    /**
+     * Modifies an old entry to match the new Entry.
+     * @param newEntry The new Entry 
+     * @param oldEntry The old Entry that will be overwritten
+     * @return returns false if the  new entry Title is invalid
+     */
     public boolean modifyEntry(Entry newEntry, Entry oldEntry) {
         if (((EntryTableModel) myEntries).contains(newEntry.getTitle())) {
             System.out.println("File not modified, Naming Conflict - Title: " + newEntry.getTitle() + " is already in use"); //TODO REMOVE AFTER TESTING
@@ -190,12 +224,19 @@ public class Bank {
         }
     }
     
-    //returns the table of the Title, Type, and Description for drawing in the gui
+    /**
+     * Returns the table of the Title, Type, and Description for drawing in the GUI.
+     * @return myEnties the TableModel for the GUI
+     */
     public TableModel getTable() {
         return myEntries;
     }
     
-    //returns a filtered table from the entries 
+    /**
+     * Returns a filtered table from the entries.
+     * @param Filters a String array of the filters
+     * @return
+     */
     public TableModel getTable(String[] filters) {
         TableModel x = new EntryTableModel();
         for (int i = 0; i < filters.length; i++) {
@@ -232,7 +273,10 @@ public class Bank {
         return x;
     }
     
-    //returns a string array of types for easy filtering
+    /**
+     * Returns a String array of Types for easy filtering.
+     * @return a String array of Types
+     */
     public String[] getTypes() {
         Statement stmt = null;
         String query = "select Type from data group by Type ";
@@ -262,32 +306,32 @@ public class Bank {
         return types.toArray(new String[types.size()]);
     }
         
-  //a main method for testing the bank
-  public static void main(String[] args) {
-      System.out.println("Start Bank Test:");
-      Bank b = new Bank();
-      Entry newEntry = new Entry ("New Entry 5a", "Sample x", "a test for the bank", "Why are you reading this? GET BACK TO CODE!!!!!!!!1!!");
-      Entry newEntry2 = new Entry ("New Entry 6a", "Sample y", "another test for the bank", "Seriously why are you still reading these? Like wasting time much??");
-      Entry newEntry3 = new Entry ("New Entry 7a", "Sample z", "yet another test for the bank", "Im not even gonna dignify that you're still reading these...");
-      Entry newEntry2b = new Entry ("New Entry 8a", "Sample", "test test testy test", "ohhhhh i bet you didnt expect that! duplicate Title son!");
-      b.addEntry(newEntry);
-      b.addEntry(newEntry2);
-      b.addEntry(newEntry);
-      b.addEntry(newEntry2b);
-//        b.deleteEntry(newEntry);
-//        b.deleteEntry(newEntry2);
-//        b.addEntry(newEntry3);
-//        b.deleteEntry(newEntry3);
-      b.addEntry(newEntry3);
-      String[] x = b.getTypes();
-      for (int i = 0; i < x.length; i++) 
-          System.out.println(x[i]);
-        TableModel garbage = b.getTable(x);
-        String y[] = new String [2];
-        y[0] = "Sample";
-        y[1] = "Sample x";
-        System.out.println("Smaller Sample Size:");
-        garbage = b.getTable(y);
-      System.out.println("End Bank Test:");
-  }
+//  //a main method for testing the bank
+//  public static void main(String[] args) {
+//      System.out.println("Start Bank Test:");
+//      Bank b = new Bank();
+//      Entry newEntry = new Entry ("New Entry 5a", "Sample x", "a test for the bank", "Why are you reading this? GET BACK TO CODE!!!!!!!!1!!");
+//      Entry newEntry2 = new Entry ("New Entry 6a", "Sample y", "another test for the bank", "Seriously why are you still reading these? Like wasting time much??");
+//      Entry newEntry3 = new Entry ("New Entry 7a", "Sample z", "yet another test for the bank", "Im not even gonna dignify that you're still reading these...");
+//      Entry newEntry2b = new Entry ("New Entry 8a", "Sample", "test test testy test", "ohhhhh i bet you didnt expect that! duplicate Title son!");
+//      b.addEntry(newEntry);
+//      b.addEntry(newEntry2);
+//      b.addEntry(newEntry);
+//      b.addEntry(newEntry2b);
+////        b.deleteEntry(newEntry);
+////        b.deleteEntry(newEntry2);
+////        b.addEntry(newEntry3);
+////        b.deleteEntry(newEntry3);
+//      b.addEntry(newEntry3);
+//      String[] x = b.getTypes();
+//      for (int i = 0; i < x.length; i++) 
+//          System.out.println(x[i]);
+//        TableModel garbage = b.getTable(x);
+//        String y[] = new String [2];
+//        y[0] = "Sample";
+//        y[1] = "Sample x";
+//        System.out.println("Smaller Sample Size:");
+//        garbage = b.getTable(y);
+//      System.out.println("End Bank Test:");
+//  }
 }
