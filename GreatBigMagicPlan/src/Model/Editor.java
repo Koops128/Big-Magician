@@ -16,9 +16,9 @@ public class Editor {
 	public void add(Entry theEntry) {
 		myBank.addEntry(theEntry);
 	}
-	public void remove(Entry theEntry){
-		myBank.deleteEntry(theEntry);
-		
+	public void remove(){
+		myBank.deleteEntry(myCurrentEntry);
+		myCurrentEntry = null;
 	}
 	public Entry getCurrentEntry() throws NullPointerException {
 		if (myCurrentEntry == null) throw new NullPointerException();
