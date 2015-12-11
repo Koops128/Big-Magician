@@ -262,32 +262,32 @@ public class Bank {
         return types.toArray(new String[types.size()]);
     }
         
-//  //a main method for testing the bank
-//  public static void main(String[] args) {
-//      System.out.println("Start Bank Test:");
-//      Bank b = new Bank();
-//      Entry newEntry = new Entry ("New Entry", "Sample x", "a test for the bank", "Why are you reading this? GET BACK TO CODE!!!!!!!!1!!");
-//      Entry newEntry2 = new Entry ("New Entry 2", "Sample y", "another test for the bank", "Seriously why are you still reading these? Like wasting time much??");
-//      Entry newEntry3 = new Entry ("New Entry 3", "Sample z", "yet another test for the bank", "Im not even gonna dignify that you're still reading these...");
-//      Entry newEntry2b = new Entry ("New Entry 2", "Sample", "test test testy test", "ohhhhh i bet you didnt expect that! duplicate Title son!");
-//      b.addEntry(newEntry);
-//      b.addEntry(newEntry2);
-//      b.addEntry(newEntry);
-//      b.addEntry(newEntry2b);
-////        b.deleteEntry(newEntry);
-////        b.deleteEntry(newEntry2);
-////        b.addEntry(newEntry3);
-////        b.deleteEntry(newEntry3);
-//      b.addEntry(newEntry3);
-//      String[] x = b.getTypes();
-//      for (int i = 0; i < x.length; i++) 
-//          System.out.println(x[i]);
-//        TableModel garbage = b.getTable(x);
-//        String y[] = new String [2];
-//        y[0] = "Sample";
-//        y[1] = "Sample x";
-//        System.out.println("Smaller Sample Size:");
-//        garbage = b.getTable(y);
-//      System.out.println("End Bank Test:");
-//  }
+  //a main method for testing the bank
+  public static void main(String[] args) {
+      System.out.println("Start Bank Test:");
+      Bank b = new Bank();
+      Entry newEntry = new Entry ("New Entry 5a", "Sample x", "a test for the bank", "Why are you reading this? GET BACK TO CODE!!!!!!!!1!!");
+      Entry newEntry2 = new Entry ("New Entry 6a", "Sample y", "another test for the bank", "Seriously why are you still reading these? Like wasting time much??");
+      Entry newEntry3 = new Entry ("New Entry 7a", "Sample z", "yet another test for the bank", "Im not even gonna dignify that you're still reading these...");
+      Entry newEntry2b = new Entry ("New Entry 8a", "Sample", "test test testy test", "ohhhhh i bet you didnt expect that! duplicate Title son!");
+      b.addEntry(newEntry);
+      b.addEntry(newEntry2);
+      b.addEntry(newEntry);
+      b.addEntry(newEntry2b);
+//        b.deleteEntry(newEntry);
+//        b.deleteEntry(newEntry2);
+//        b.addEntry(newEntry3);
+//        b.deleteEntry(newEntry3);
+      b.addEntry(newEntry3);
+      String[] x = b.getTypes();
+      for (int i = 0; i < x.length; i++) 
+          System.out.println(x[i]);
+        TableModel garbage = b.getTable(x);
+        String y[] = new String [2];
+        y[0] = "Sample";
+        y[1] = "Sample x";
+        System.out.println("Smaller Sample Size:");
+        garbage = b.getTable(y);
+      System.out.println("End Bank Test:");
+  }
 }

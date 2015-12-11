@@ -67,7 +67,7 @@ public class MainPanel extends JPanel{
 			int row = table.getSelectedRow();
 			if (row >= 0) {
 				editor.setCurrentEntry((String) table.getValueAt(row, 0));
-				desc.setText(editor.getCurrentEntry().getDescription());
+				desc.setText(editor.getCurrentEntry().getContent());
 				edit.setEnabled(true);
 				use.setEnabled(true);
 				delete.setEnabled(true);
@@ -102,7 +102,9 @@ public class MainPanel extends JPanel{
 		desc.setEditable(false);
 		desc.setMinimumSize(new Dimension(MainFrame.WIDTH-10,
 				(int) (MainFrame.HEIGHT-sc.getMinimumSize().getHeight())));
-		JLabel lbl_desc = new JLabel("Description");
+		desc.setLineWrap(true);
+		desc.setWrapStyleWord(true);
+		JLabel lbl_desc = new JLabel("Content");
 		lbl_desc.setLabelFor(desc);
 		
 		tblPanel.add(sc,gb_sc);
@@ -140,16 +142,18 @@ public class MainPanel extends JPanel{
 			//send to the editor
 			//this.editor.setEditing(          );
 			this.firePropertyChange(
-					CardPanel.PROPERTYNAME, CardPanel.MAINNAME, CardPanel.EDITNAME);
+					CardPanel.SWITCHPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
 		
 		delete = new JButton("Delete Clause");
 		delete.setEnabled(false);
 		delete.addActionListener((event)->{
 			//TODO ask editor to delete Entry
+			
 			//get the number of the Entry from the JTable
 			//send to the editor
-			//this.editor.deleteEntry(              );
+			this.editor.remove();
+			resetTable();
 		});
 		
 		btnPanel.add(use);
@@ -161,6 +165,7 @@ public class MainPanel extends JPanel{
 	
 	public void resetTable() {
 		this.table.setModel(editor.getTable());
+		this.repaint();
 	}
 	
 }

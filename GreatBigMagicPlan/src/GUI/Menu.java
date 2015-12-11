@@ -10,6 +10,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
+import Model.Editor;
+
 /**
  *
  *
@@ -20,9 +22,11 @@ public class Menu extends JMenuBar {
 	
 	private JMenu filterMenu;
 	
-	private JMenu aboutMenu;	
+	private JMenu aboutMenu;
+	private Editor editor;
 	
-	public Menu(){
+	public Menu(Editor editor){
+		this.editor = editor;
 		buildFileMenu();
 		buildFilterMenu();
 		buildAboutMenu();
@@ -35,24 +39,24 @@ public class Menu extends JMenuBar {
 		fileMenu = new JMenu("File");
 		JMenuItem addentry = new JMenuItem("Add Entry");
 		addentry.addActionListener((event)->{
-
+			//TODO open JFileChooser -> if file selected -> 
+			//save file contents to String -> fire property change.
 				System.out.println("you ADDED an ITEM");
-			
+				this.firePropertyChange(
+						CardPanel.ADDPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
 
 		JMenuItem removeEntry = new JMenuItem("Remove Entry");
 		removeEntry.addActionListener((event)->{
-
+			editor.remove();
 				System.out.println("oh great now you REMOVED ONE");
 			
 		});
 
 		JMenuItem editEntry = new JMenuItem("Edit Entry");
 		editEntry.addActionListener((event)->{
-
-				System.out.println("EDIT? WHAT WAS WRONG WITH IT "
-						+ "THE FIRST TIME??");
-			
+			this.firePropertyChange(
+					CardPanel.SWITCHPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.addActionListener((event)->{

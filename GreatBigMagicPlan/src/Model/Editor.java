@@ -26,13 +26,14 @@ public class Editor {
 	 * This method removes the currently selected entry from the language library.
 	 * @param theEntry The Entry object to be deleted from the library.
 	 */
-	public void remove(Entry theEntry){
-		myBank.deleteEntry(theEntry);		
+	public void remove(){
+		myBank.deleteEntry(myCurrentEntry);
+		myCurrentEntry = null;
 	}
-	/**
-	 * This method returns the currently selected Entry object.
-	 * @return Entry The selected entry.
-	 */
+/**
+ * This method returns the currently selected Entry object.
+ * @return Entry The selected entry.
+ */
 	public Entry getCurrentEntry() {
 		return myCurrentEntry;
 	}

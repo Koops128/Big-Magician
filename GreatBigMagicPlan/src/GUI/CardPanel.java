@@ -14,7 +14,8 @@ import Model.Editor;
  */
 public class CardPanel extends JPanel implements PropertyChangeListener{
 	
-	public final static String PROPERTYNAME = "switch";
+	public final static String SWITCHPROPERTY = "switch";
+	public final static String ADDPROPERTY = "add";
 	
 	private MainPanel main;
 	public final static String MAINNAME = "Clause View";
@@ -22,7 +23,7 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	private EditPanel edit;
 	public final static String EDITNAME = "Edit View";
 	
-	public CardPanel(Editor editor) {
+	public CardPanel(Editor editor, Menu menu) {
 		this.setLayout(new CardLayout());
 		
 		main = new MainPanel(editor);
@@ -30,6 +31,8 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 		
 		main.addPropertyChangeListener("switch", this);
 		edit.addPropertyChangeListener("switch", this);
+		menu.addPropertyChangeListener("switch", this);
+		menu.addPropertyChangeListener("add", this);
 		
 		this.add(main, MAINNAME);
 		this.add(edit, EDITNAME);
@@ -37,11 +40,15 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		if (PROPERTYNAME.equals(event.getPropertyName())) {
+		if (SWITCHPROPERTY.equals(event.getPropertyName())) {
 			CardLayout cd = (CardLayout) this.getLayout();
 			cd.show(this, (String) event.getNewValue());
 			edit.setCurrentEntry();
 			main.resetTable();
+		} else if (ADDPROPERTY.equals(event.getPropertyName())) {
+			edit.setCurrentEntry((String) event.getOldValue());
+			CardLayout cd = (CardLayout) this.getLayout();
+			cd.show(this, (String) event.getNewValue());
 		}
 	}
 }

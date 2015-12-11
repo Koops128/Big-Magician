@@ -69,7 +69,11 @@ public class EditPanel extends JPanel {
 		
 		//-----------------COMPONENTS--------------------------
 		type = new JTextField();
+		type.setMinimumSize(new Dimension(MainFrame.WIDTH/2 - 20, 0));
+		type.setPreferredSize(new Dimension(MainFrame.WIDTH/2 - 20, 20));
 		title = new JTextField();
+		title.setMinimumSize(new Dimension(MainFrame.WIDTH/2 - 20, 0));
+		title.setPreferredSize(new Dimension(MainFrame.WIDTH/2 - 20, 20));
 		description = new JTextField();
 		clause = new JTextArea();
 		clause.setLineWrap(true);
@@ -134,21 +138,31 @@ public class EditPanel extends JPanel {
 		JButton save = new JButton("Save");
 		save.addActionListener((event)->{
 			//TODO uncomment this when method added to Editor
-			editor.changeEntry(
-				this.title.getText(),
-				this.type.getText(),
-				this.description.getText(),
-				this.clause.getText()
-			);
+			if(editor.getCurrentEntry() == null) {
+				Entry current = new Entry(
+						title.getText(),
+						type.getText(),
+						description.getText(),
+						clause.getText()
+					);
+				editor.add(current);
+			} else {
+				editor.changeEntry(
+					this.title.getText(),
+					this.type.getText(),
+					this.description.getText(),
+					this.clause.getText()
+				);
+			}
 			this.firePropertyChange(
-					CardPanel.PROPERTYNAME, CardPanel.EDITNAME, CardPanel.MAINNAME);
+					CardPanel.SWITCHPROPERTY, CardPanel.EDITNAME, CardPanel.MAINNAME);
 		});
 		
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener((event)->{
 			//nothing needs to change
 			this.firePropertyChange(
-					CardPanel.PROPERTYNAME, CardPanel.EDITNAME, CardPanel.MAINNAME);
+					CardPanel.SWITCHPROPERTY, CardPanel.EDITNAME, CardPanel.MAINNAME);
 		});
 		
 		btnPanel.add(save);
@@ -164,9 +178,19 @@ public class EditPanel extends JPanel {
 	 */
 	public void setCurrentEntry() {
 		Entry current = editor.getCurrentEntry();
-		type.setText(current.getType());
-		title.setText(current.getTitle());
-		description.setText(current.getDescription());
-		clause.setText(current.getContent());
+		if (current != null) {
+			type.setText(current.getType());
+			title.setText(current.getTitle());
+			description.setText(current.getDescription());
+			clause.setText(current.getContent());
+		}
+	}
+	
+	public void setCurrentEntry(String newcontent) {
+		editor.setCurrentEntry(null);
+		this.clause.setText(newcontent);
+		type.setText("");
+		title.setText("");
+		description.setText("");
 	}
 }

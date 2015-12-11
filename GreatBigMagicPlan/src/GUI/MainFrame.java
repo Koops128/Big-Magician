@@ -33,8 +33,8 @@ public class MainFrame extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(x,y,WIDTH,HEIGHT);
 		Editor editor = new Editor();
-		cards = new CardPanel(editor);
-		menu = new Menu(/*editor*/);
+		menu = new Menu(editor);
+		cards = new CardPanel(editor, menu);
 		this.setJMenuBar(menu);
 		this.setContentPane(cards);
 		this.setVisible(true);
