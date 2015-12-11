@@ -10,7 +10,7 @@ import Model.Editor;
 
 /**
  * @author Melinda Robertson
- * @version 20151125
+ * @version 20151211
  */
 public class CardPanel extends JPanel implements PropertyChangeListener{
 	
@@ -28,13 +28,29 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	 * to null to prepare
 	 */
 	public final static String ADDPROPERTY = "add";
-	
+	/**
+	 * The main panel that holds a list of entries.
+	 */
 	private MainPanel main;
+	/**
+	 * The name for the main panel, used when switching panels.
+	 */
 	public final static String MAINNAME = "Clause View";
-	
+	/**
+	 * The edit panel where the user can make changes to the
+	 * current entry or create a new entry.
+	 */
 	private EditPanel edit;
+	/**
+	 * The name of the edit panel, used when switching panels.
+	 */
 	public final static String EDITNAME = "Edit View";
-	
+	/**
+	 * Constructs the card panel by making it a listener for
+	 * certain property change events.
+	 * @param editor is the go-between for the database.
+	 * @param menu is the menu bar that adds new entries.
+	 */
 	public CardPanel(Editor editor, Menu menu) {
 		this.setLayout(new CardLayout());
 		
@@ -50,6 +66,11 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 		this.add(edit, EDITNAME);
 	}
 
+	/**
+	 * The property change event is constructed so that the old
+	 * value is only used when adding an entry and the new value
+	 * is always the name of the panel to switch to.
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		if (SWITCHPROPERTY.equals(event.getPropertyName())) {
