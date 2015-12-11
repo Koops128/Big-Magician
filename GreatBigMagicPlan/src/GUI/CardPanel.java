@@ -14,7 +14,19 @@ import Model.Editor;
  */
 public class CardPanel extends JPanel implements PropertyChangeListener{
 	
+	/**
+	 * Super serial.
+	 */
+	private static final long serialVersionUID = 3034268517929753111L;
+	/**
+	 * The switch property tells the card panel to get the current entry
+	 * from the table and switch to the edit panel.
+	 */
 	public final static String SWITCHPROPERTY = "switch";
+	/**
+	 * The add property tells the card panel to set the current entry
+	 * to null to prepare
+	 */
 	public final static String ADDPROPERTY = "add";
 	
 	private MainPanel main;
