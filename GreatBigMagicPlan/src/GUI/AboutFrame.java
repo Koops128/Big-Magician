@@ -3,7 +3,6 @@
  import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -25,14 +24,20 @@ import javax.swing.JTextField;
  	 * It's super serial.
  	 */
  	private static final long serialVersionUID =  2902400071493857246L;
- 	
+ 	/**
+ 	 * Is the main content pane for this frame.
+ 	 */
  	private JPanel main;
- 	
+ 	/**
+ 	 * Defines the content to display when the button is pushed.
+ 	 */
  	private final String[][] information = new String[][] {
  			{"Copyright","License",""},
  			{"2015", "This program is licensed under General Public License, version 3 GPL-3.0.",""}
  	};
- 	
+ 	/**
+ 	 * Counts what information was already displayed.
+ 	 */
  	private int counter = 0;
  
  	/**
@@ -115,7 +120,12 @@ import javax.swing.JTextField;
  		resetSize(this.getX(), this.getY());
  		this.setVisible(true);
  	}
- 	
+ 	/**
+ 	 * Resets the size of this frame when new things are added
+ 	 * so that they fit.
+ 	 * @param x is the new horizontal position of the window.
+ 	 * @param y is the new vertical position of the window.
+ 	 */
  	private void resetSize(int x, int y) {
  		Dimension d = main.getPreferredSize();
  		this.setBounds(x,y, (int) d.getWidth() + 25, (int) d.getHeight() + 50);
