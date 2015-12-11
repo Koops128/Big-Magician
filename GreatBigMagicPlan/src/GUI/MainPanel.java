@@ -132,13 +132,18 @@ public class MainPanel extends JPanel{
 			edit.setEnabled(true);
 			use.setEnabled(true);
 			delete.setEnabled(true);
+			firePropertyChange(CardPanel.SELECTPROPERTY,
+					true, CardPanel.MAINNAME);
 		} else {
 			editor.setCurrentEntry(null);
 			content.setText("");
 			edit.setEnabled(false);
 			use.setEnabled(false);
 			delete.setEnabled(false);
+			firePropertyChange(CardPanel.SELECTPROPERTY,
+					false, CardPanel.MAINNAME);
 		}
+		
 	}
 	
 	/**

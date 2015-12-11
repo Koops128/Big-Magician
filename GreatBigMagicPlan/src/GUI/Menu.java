@@ -3,12 +3,18 @@
  */
 package GUI;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
 import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Model.Editor;
 
@@ -23,6 +29,8 @@ public class Menu extends JMenuBar {
 	private JMenu filterMenu;
 	
 	private JMenu aboutMenu;
+	private JMenuItem removeEntry;
+	private JMenuItem editEntry;
 	private Editor editor;
 	
 	public Menu(Editor editor){
@@ -41,19 +49,54 @@ public class Menu extends JMenuBar {
 		addentry.addActionListener((event)->{
 			//TODO open JFileChooser -> if file selected -> 
 			//save file contents to String -> fire property change.
-				System.out.println("you ADDED an ITEM");
-				this.firePropertyChange(
-						CardPanel.ADDPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
-		});
+			StringBuffer stringBuffer = new StringBuffer();
+			final JFileChooser fc = new JFileChooser();
+			fc.setCurrentDirectory(null);
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files",
+					"txt");
+			fc.setFileFilter(filter);
+			int returnVal = fc.showOpenDialog(null);
+			
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				
+				BufferedReader bufferedReader = null;
+				try {
+					bufferedReader = new BufferedReader(new FileReader(file));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				String line = null;
+				try {
+					while((line = bufferedReader.readLine()) != null) {
 
-		JMenuItem removeEntry = new JMenuItem("Remove Entry");
+						stringBuffer.append(line);//.append("\n");
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+//				System.out.println("you ADDED an ITEM");
+				this.firePropertyChange(
+						CardPanel.ADDPROPERTY, stringBuffer.toString(), CardPanel.EDITNAME);
+		}
+				
+			
+				
+		});
+		
+		
+		removeEntry = new JMenuItem("Remove Entry");
 		removeEntry.addActionListener((event)->{
 			editor.remove();
-				System.out.println("oh great now you REMOVED ONE");
-			
+			System.out.println("oh great now you REMOVED ONE");
+			this.firePropertyChange(CardPanel.REMOVEPROPERTY, null, CardPanel.MAINNAME);
 		});
 
-		JMenuItem editEntry = new JMenuItem("Edit Entry");
+		editEntry = new JMenuItem("Edit Entry");
 		editEntry.addActionListener((event)->{
 			this.firePropertyChange(
 					CardPanel.SWITCHPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
@@ -67,11 +110,16 @@ public class Menu extends JMenuBar {
 			
 
 		});
-
+		setEnabled(false);
 		fileMenu.add(addentry);
 		fileMenu.add(removeEntry);
 		fileMenu.add(editEntry);
 		fileMenu.add(exit);
+	}
+	
+	public void setEnabled(boolean b) {
+		removeEntry.setEnabled(b);
+		editEntry.setEnabled(b);
 	}
 	
 	public void buildFilterMenu() {
