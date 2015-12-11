@@ -64,20 +64,7 @@ public class MainPanel extends JPanel{
 		ListSelectionModel lsm = table.getSelectionModel();
 		lsm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lsm.addListSelectionListener((event)->{
-			int row = table.getSelectedRow();
-			if (row >= 0) {
-				editor.setCurrentEntry((String) table.getValueAt(row, 0));
-				desc.setText(editor.getCurrentEntry().getContent());
-				edit.setEnabled(true);
-				use.setEnabled(true);
-				delete.setEnabled(true);
-			} else {
-				editor.setCurrentEntry(null);
-				desc.setText("");
-				edit.setEnabled(false);
-				use.setEnabled(false);
-				delete.setEnabled(false);
-			}
+			listSelection();
 		});
 		
 		//------------------GRIDBAG THINGYS------------------
@@ -111,6 +98,23 @@ public class MainPanel extends JPanel{
 		tblPanel.add(lbl_desc,gb_lbl);
 		tblPanel.add(desc,gb_desc);
 		this.add(tblPanel, BorderLayout.CENTER);
+	}
+	
+	private void listSelection() {
+		int row = table.getSelectedRow();
+		if (row >= 0) {
+			editor.setCurrentEntry((String) table.getValueAt(row, 0));
+			desc.setText(editor.getCurrentEntry().getContent());
+			edit.setEnabled(true);
+			use.setEnabled(true);
+			delete.setEnabled(true);
+		} else {
+			editor.setCurrentEntry(null);
+			desc.setText("");
+			edit.setEnabled(false);
+			use.setEnabled(false);
+			delete.setEnabled(false);
+		}
 	}
 	
 	/**
@@ -154,6 +158,7 @@ public class MainPanel extends JPanel{
 			//send to the editor
 			this.editor.remove();
 			resetTable();
+			listSelection();
 		});
 		
 		btnPanel.add(use);
