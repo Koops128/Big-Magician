@@ -42,7 +42,8 @@ public class Menu extends JMenuBar {
 			//TODO open JFileChooser -> if file selected -> 
 			//save file contents to String -> fire property change.
 				System.out.println("you ADDED an ITEM");
-			
+				this.firePropertyChange(
+						CardPanel.ADDPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
 
 		JMenuItem removeEntry = new JMenuItem("Remove Entry");

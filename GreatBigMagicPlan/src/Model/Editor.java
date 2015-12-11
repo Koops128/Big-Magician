@@ -20,8 +20,7 @@ public class Editor {
 		myBank.deleteEntry(myCurrentEntry);
 		myCurrentEntry = null;
 	}
-	public Entry getCurrentEntry() throws NullPointerException {
-		if (myCurrentEntry == null) throw new NullPointerException();
+	public Entry getCurrentEntry() {
 		return myCurrentEntry;
 	}
 	
