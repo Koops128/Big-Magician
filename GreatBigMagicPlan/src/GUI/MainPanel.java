@@ -142,7 +142,7 @@ public class MainPanel extends JPanel{
 			//send to the editor
 			//this.editor.setEditing(          );
 			this.firePropertyChange(
-					CardPanel.PROPERTYNAME, CardPanel.MAINNAME, CardPanel.EDITNAME);
+					CardPanel.SWITCHPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
 		
 		delete = new JButton("Delete Clause");

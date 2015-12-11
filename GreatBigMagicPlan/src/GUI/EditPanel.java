@@ -134,21 +134,31 @@ public class EditPanel extends JPanel {
 		JButton save = new JButton("Save");
 		save.addActionListener((event)->{
 			//TODO uncomment this when method added to Editor
-			editor.changeEntry(
-				this.title.getText(),
-				this.type.getText(),
-				this.description.getText(),
-				this.clause.getText()
-			);
+			if(editor.getCurrentEntry() == null) {
+				Entry current = new Entry(
+						title.getText(),
+						type.getText(),
+						description.getText(),
+						clause.getText()
+					);
+				editor.add(current);
+			} else {
+				editor.changeEntry(
+					this.title.getText(),
+					this.type.getText(),
+					this.description.getText(),
+					this.clause.getText()
+				);
+			}
 			this.firePropertyChange(
-					CardPanel.PROPERTYNAME, CardPanel.EDITNAME, CardPanel.MAINNAME);
+					CardPanel.SWITCHPROPERTY, CardPanel.EDITNAME, CardPanel.MAINNAME);
 		});
 		
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener((event)->{
 			//nothing needs to change
 			this.firePropertyChange(
-					CardPanel.PROPERTYNAME, CardPanel.EDITNAME, CardPanel.MAINNAME);
+					CardPanel.SWITCHPROPERTY, CardPanel.EDITNAME, CardPanel.MAINNAME);
 		});
 		
 		btnPanel.add(save);
@@ -168,5 +178,10 @@ public class EditPanel extends JPanel {
 		title.setText(current.getTitle());
 		description.setText(current.getDescription());
 		clause.setText(current.getContent());
+	}
+	
+	public void setCurrentEntry(String newcontent) {
+		editor.setCurrentEntry(null);
+		this.clause.setText(newcontent);
 	}
 }
