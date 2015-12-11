@@ -8,7 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.IOException;
-
+import java.io.PrintWriter;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -154,9 +154,14 @@ public class MainPanel extends JPanel{
 		use.addActionListener((event)->{
 			//Reference: http://www.avajava.com/tutorials/lessons/how-do-i-run-another-application-from-java.html
 			//@author Deron Eriksson
+			String text = editor.getCurrentEntry().getContent();
 			try {
+				String fTitle = "Your File";
+				PrintWriter myWriter = new PrintWriter(fTitle, "UTF-8");
+				myWriter.write(text);
+				myWriter.close();				
 				Runtime runTime = Runtime.getRuntime();
-				Process process = runTime.exec("notepad");
+				Process process = runTime.exec("notepad " + fTitle);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
