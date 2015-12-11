@@ -124,7 +124,7 @@ public class MainPanel extends JPanel{
 	 * Gets the currently selected value from the table
 	 * and sets the current entry for the editor.
 	 */
-	private void listSelection() {
+	public void listSelection() {
 		int row = table.getSelectedRow();
 		if (row >= 0) {
 			editor.setCurrentEntry((String) table.getValueAt(row, 0));
