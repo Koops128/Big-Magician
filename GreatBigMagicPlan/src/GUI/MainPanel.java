@@ -4,28 +4,27 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
+
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
+
 import Model.Editor;
 
 /**
  * @author Melinda Robertson
- * @version 20151125
+ * @version 20151211
  */
 public class MainPanel extends JPanel{
 
@@ -33,17 +32,35 @@ public class MainPanel extends JPanel{
 	 * Super Serial
 	 */
 	private static final long serialVersionUID = 5986050981069086758L;
-
+	/**
+	 * Holds the data for all entries.
+	 */
 	private JTable table;
-	
-	private JTextArea desc;
-	
+	/**
+	 * Displays the clause that is selected from the table.
+	 */
+	private JTextArea content;
+	/**
+	 * Opens the current entry to edit and fires an event to
+	 * prompt the card panel to switch panes.
+	 */
 	private JButton edit;
+	/**
+	 * Opens the default text editor with the current entry's content loaded.
+	 */
 	private JButton use;
+	/**
+	 * Deletes the current entry from the database.
+	 */
 	private JButton delete;
-	
+	/**
+	 * Conveys information to and from the database.
+	 */
 	private Editor editor;
-	
+	/**
+	 * Constructs a panel that displays a list of entries.
+	 * @param editor is the go-between for the database.
+	 */
 	public MainPanel(Editor editor) {
 		this.editor = editor;
 		this.setLayout(new BorderLayout());
@@ -51,7 +68,11 @@ public class MainPanel extends JPanel{
 		buildBtnPanel();
 	}
 	
-	public void buildTablePanel() {
+	/**
+	 * Creates a panel for the table and content view and
+	 * adds them to this Component.
+	 */
+	private void buildTablePanel() {
 		JPanel tblPanel = new JPanel();
 		GridBagLayout gb = new GridBagLayout();
 		gb.rowHeights = new int[]{MainFrame.HEIGHT/2,50};
@@ -85,32 +106,35 @@ public class MainPanel extends JPanel{
 		gb_desc.fill = GridBagConstraints.BOTH;
 		
 		
-		desc = new JTextArea();
-		desc.setEditable(false);
-		desc.setMinimumSize(new Dimension(MainFrame.WIDTH-10,
+		content = new JTextArea();
+		content.setEditable(false);
+		content.setMinimumSize(new Dimension(MainFrame.WIDTH-10,
 				(int) (MainFrame.HEIGHT-sc.getMinimumSize().getHeight())));
-		desc.setLineWrap(true);
-		desc.setWrapStyleWord(true);
+		content.setLineWrap(true);
+		content.setWrapStyleWord(true);
 		JLabel lbl_desc = new JLabel("Content");
-		lbl_desc.setLabelFor(desc);
+		lbl_desc.setLabelFor(content);
 		
 		tblPanel.add(sc,gb_sc);
 		tblPanel.add(lbl_desc,gb_lbl);
-		tblPanel.add(desc,gb_desc);
+		tblPanel.add(content,gb_desc);
 		this.add(tblPanel, BorderLayout.CENTER);
 	}
-	
+	/**
+	 * Gets the currently selected value from the table
+	 * and sets the current entry for the editor.
+	 */
 	private void listSelection() {
 		int row = table.getSelectedRow();
 		if (row >= 0) {
 			editor.setCurrentEntry((String) table.getValueAt(row, 0));
-			desc.setText(editor.getCurrentEntry().getContent());
+			content.setText(editor.getCurrentEntry().getContent());
 			edit.setEnabled(true);
 			use.setEnabled(true);
 			delete.setEnabled(true);
 		} else {
 			editor.setCurrentEntry(null);
-			desc.setText("");
+			content.setText("");
 			edit.setEnabled(false);
 			use.setEnabled(false);
 			delete.setEnabled(false);
@@ -123,7 +147,7 @@ public class MainPanel extends JPanel{
 	 *  Edit Clause
 	 *  Delete Clause
 	 */
-	public void buildBtnPanel() {
+	private void buildBtnPanel() {
 		JPanel btnPanel = new JPanel();
 		use = new JButton("Use Clause");
 		use.setEnabled(false);
@@ -156,9 +180,12 @@ public class MainPanel extends JPanel{
 			
 			//get the number of the Entry from the JTable
 			//send to the editor
-			this.editor.remove();
-			resetTable();
-			listSelection();
+			int choice = JOptionPane.showConfirmDialog(this, "Confirm delete?");
+			if (choice == JOptionPane.YES_OPTION) {
+				this.editor.remove();
+				resetTable();
+				listSelection();
+			}
 		});
 		
 		btnPanel.add(use);
@@ -168,6 +195,9 @@ public class MainPanel extends JPanel{
 		this.add(btnPanel, BorderLayout.SOUTH);
 	}
 	
+	/**
+	 * Resets the table so that changes can be viewed.
+	 */
 	public void resetTable() {
 		this.table.setModel(editor.getTable());
 		this.repaint();
