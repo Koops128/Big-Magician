@@ -31,6 +31,13 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	/**
 	 * The main panel that holds a list of entries.
 	 */
+	
+	public final static String REMOVEPROPERTY = "remove";
+	public final static String SELECTPROPERTY = "select";
+	/**
+	 * The remove property tells the card panel to remove an entry and reset
+	 * the main panel.
+	 */
 	private MainPanel main;
 	/**
 	 * The name for the main panel, used when switching panels.
@@ -45,6 +52,8 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	 * The name of the edit panel, used when switching panels.
 	 */
 	public final static String EDITNAME = "Edit View";
+	
+	private Menu menu;
 	/**
 	 * Constructs the card panel by making it a listener for
 	 * certain property change events.
@@ -56,11 +65,14 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 		
 		main = new MainPanel(editor);
 		edit = new EditPanel(editor);
+		this.menu = menu;
 		
 		main.addPropertyChangeListener("switch", this);
 		edit.addPropertyChangeListener("switch", this);
 		menu.addPropertyChangeListener("switch", this);
 		menu.addPropertyChangeListener("add", this);
+		menu.addPropertyChangeListener("remove", this);
+		main.addPropertyChangeListener("select", this);
 		
 		this.add(main, MAINNAME);
 		this.add(edit, EDITNAME);
@@ -83,6 +95,11 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 			edit.setCurrentEntry((String) event.getOldValue());
 			CardLayout cd = (CardLayout) this.getLayout();
 			cd.show(this, (String) event.getNewValue());
+		} else if (REMOVEPROPERTY.equals(event.getPropertyName())) {
+			main.resetTable();
+		} else if (SELECTPROPERTY.equals(event.getPropertyName())) {
+			menu.setEnabled((boolean) event.getOldValue());
+			System.out.println("went in here!");
 		}
 	}
 }
