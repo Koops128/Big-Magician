@@ -96,7 +96,7 @@ public class Bank {
     private void loadEntries() {
         Statement stmt = null;
         String query = "select Title, Type, Description, Content "
-                + "from data ";
+                + "from data order by Title";
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -200,7 +200,7 @@ public class Bank {
      * @return returns false if the  new entry Title is invalid
      */
     public boolean modifyEntry(Entry newEntry, Entry oldEntry) {
-        if (((EntryTableModel) myEntries).contains(newEntry.getTitle())) {
+        if (!newEntry.getTitle().equals(oldEntry.getTitle()) && ((EntryTableModel) myEntries).contains(newEntry.getTitle())) {
             System.out.println("File not modified, Naming Conflict - Title: " + newEntry.getTitle() + " is already in use"); //TODO REMOVE AFTER TESTING
             return false; 
         } else {
@@ -214,12 +214,13 @@ public class Bank {
                 preparedStatement.setString(2, newEntry.getType());
                 preparedStatement.setString(3, newEntry.getDescription());
                 preparedStatement.setString(4, newEntry.getContent());
-                preparedStatement.setString(5, newEntry.getTitle());
+                preparedStatement.setString(5, oldEntry.getTitle());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 System.out.println(e);
                 e.printStackTrace();
             }
+            System.out.println("File modified, Named: " + newEntry.getTitle() + " is already in use"); //TODO REMOVE AFTER TESTING
             return true;
         }
     }
