@@ -236,7 +236,7 @@ public class Bank {
     /**
      * Returns a filtered table from the entries.
      * @param Filters a String array of the filters
-     * @return
+     * @return A filtered TableModel
      */
     public TableModel getTable(String[] filters) {
         TableModel x = new EntryTableModel();
