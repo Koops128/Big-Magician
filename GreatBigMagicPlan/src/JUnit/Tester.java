@@ -3,8 +3,7 @@ package JUnit;
 import org.junit.Before;
 import org.junit.Test;
 
-import GUI.*;
-import Model.Bank;
+
 import Model.Editor;
 import Model.Entry;
 
