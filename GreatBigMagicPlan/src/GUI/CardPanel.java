@@ -101,7 +101,7 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 			main.resetTable();
 		} else if (SELECTPROPERTY.equals(event.getPropertyName())) {
 			menu.setEnabled((boolean) event.getOldValue());
-			System.out.println("went in here!");
+//			System.out.println("went in here!");
 		}
 	}
 }
