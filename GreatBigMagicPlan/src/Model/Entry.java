@@ -4,6 +4,7 @@ package Model;
  * This class holds the data of an Entry.
  * @author Matthew Cles
  * @author Ashcon Minoo
+ * Debugged - Paul Gray
  * @version 2.0
  */
 public class Entry {
