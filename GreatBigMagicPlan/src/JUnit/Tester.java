@@ -4,6 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import GUI.*;
+import Model.Bank;
+import Model.Editor;
+import Model.Entry;
 
 
 /**
@@ -12,18 +15,20 @@ import GUI.*;
  * @author Paul Gray
  * @version November 2015
  */
-public class EasterEggTest {
+public class Tester {
     
     // The test fixture. The Objects I will use in the tests.
     /** An AboutFrame to use in the tests. */
-    private AboutFrame myFrame;
+    private Editor myEditor;
+    private Entry myEntry;
 
     /**
      * A method to initialize the test fixture before each test.
      */
     @Before
     public void setUp() {
-        myFrame = new AboutFrame();
+        myEditor = new Editor();
+        myEntry = new Entry("Title", "Type", "Description", "Contents");
     }
 
     /**
@@ -31,6 +36,7 @@ public class EasterEggTest {
      */
     @Test
     public void test() {
+    	myEditor.add(myEntry);
     	
     	
     }
