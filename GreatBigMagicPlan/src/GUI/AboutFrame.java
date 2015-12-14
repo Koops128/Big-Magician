@@ -32,8 +32,20 @@ import javax.swing.JTextField;
  	 * Defines the content to display when the button is pushed.
  	 */
  	private final String[][] information = new String[][] {
- 			{"Copyright","License",""},
- 			{"2015", "This program is licensed under General Public License, version 3 GPL-3.0.",""}
+ 			{"Copyright","2015",""},
+ 			{"License", "This program is licensed under General Public License, version 3 GPL-3.0.",""},
+            {"", "", ""},
+            {"Sorry", "That's all.", ""},
+            {"", "", ""},
+            {"...", "...", ""},
+            {"Ouch", "...", ""},
+            {"Okay", "Now you're hurting me", ""},
+            {"Please", "Please stop that", ""},
+            {"Seriously", "My insides hurt", ""},
+            {"STOP", "CLICKING", ""},
+            {"I'M GETTING MAD!", "DON'T MAKE ME TERMINATE THIS PROGRAM!", ""},
+            {"You're", "Asking for it!", ""},
+            {"I AM", "WARNING YOU!!!", ""}
  	};
  	/**
  	 * Counts what information was already displayed.
@@ -62,16 +74,22 @@ import javax.swing.JTextField;
  		btn.addActionListener((event)-> {
  			String name = "";
  			String desc = "";
- 			if(counter < information[0].length) {
- 				name = information[0][counter];
- 				desc = information[1][counter];
+ 			if(counter < information.length) {
+ 				name = information[counter][0];
+ 				desc = information[counter][1];
  				counter ++;
  				addNewLabel(name,desc);
  			} else {
- 				addNewLabel("Sorry", "That's all.");
+ 				addNewLabel("", "");
+ 				try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+ 				
+ 				System.exit(0); 	
  			}
- 			
- 		});
+  		});
  		main.add(btn);
  		this.add(main);
  		int x = MainFrame.x + ((MainFrame.WIDTH / 4)-(this.getWidth()/2));
