@@ -165,7 +165,7 @@ public class Bank {
             System.out.println("Another Entry already has Title: " + e.getTitle()); //TODO REMOVE AFTER TESTING    
             return false;
         } else {
-            ((EntryTableModel) myEntries).add(e);
+            ((EntryTableModel) myEntries).addInOrder(e);
             String sql = "insert into data values " + "(?, ?, ?, ?); ";
             PreparedStatement preparedStatement = null;
             try {

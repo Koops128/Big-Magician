@@ -36,6 +36,18 @@ public class EntryTableModel extends AbstractTableModel {
     public void add(Entry e) {
         myList.add(e);
     }
+
+    public void addInOrder(Entry e) {
+        int count = 0;
+        for (Entry ent : myList) {
+            if (e.getTitle().compareTo(ent.getTitle()) < 0) {
+                myList.add(count, e);
+                return;
+            }
+            count++;
+        }
+        myList.add(e);
+    }
     
     /**
      * This method removes an entry from the table model.
