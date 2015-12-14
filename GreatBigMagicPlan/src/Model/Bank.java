@@ -254,7 +254,7 @@ public class Bank {
                     String description = rs.getString("Description");
                     String content = rs.getString("Content");
                     Entry e = new Entry(title, type, description, content);
-                    ((EntryTableModel) x).add(e);
+                    ((EntryTableModel) x).addInOrder(e);
                     System.out.println("  Title: " + title); //TODO REMOVE AFTER TESTING
                 }
             } catch (SQLException e) {
