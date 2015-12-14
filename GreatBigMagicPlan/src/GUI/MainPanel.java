@@ -155,7 +155,7 @@ public class MainPanel extends JPanel{
 	 */
 	private void buildBtnPanel() {
 		JPanel btnPanel = new JPanel();
-		use = new JButton("Use Clause");
+		use = new JButton("Use Entry");
 		use.setEnabled(false);
 		use.addActionListener((event)->{
 			//Reference: http://www.avajava.com/tutorials/lessons/how-do-i-run-another-application-from-java.html
@@ -173,7 +173,7 @@ public class MainPanel extends JPanel{
 			}
 		});
 		
-		edit = new JButton("Edit Clause");
+		edit = new JButton("Edit Entry");
 		edit.setEnabled(false);
 		edit.addActionListener((event)->{
 			//TODO set the Entry that is being edited
@@ -184,7 +184,7 @@ public class MainPanel extends JPanel{
 					CardPanel.SWITCHPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
 		
-		delete = new JButton("Delete Clause");
+		delete = new JButton("Delete Entry");
 		delete.setEnabled(false);
 		delete.addActionListener((event)->{
 			//TODO ask editor to delete Entry
