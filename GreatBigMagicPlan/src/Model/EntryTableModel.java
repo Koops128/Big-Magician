@@ -36,7 +36,10 @@ public class EntryTableModel extends AbstractTableModel {
     public void add(Entry e) {
         myList.add(e);
     }
-
+    /**
+     * This method adds an entry to the table model, in (Java) alphabetical order.
+     * @param e The Entry to add
+     */
     public void addInOrder(Entry e) {
         int count = 0;
         for (Entry ent : myList) {

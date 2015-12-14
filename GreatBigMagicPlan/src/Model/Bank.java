@@ -205,7 +205,7 @@ public class Bank {
             return false; 
         } else {
             ((EntryTableModel) myEntries).remove(oldEntry);
-            ((EntryTableModel) myEntries).add(newEntry);
+            ((EntryTableModel) myEntries).addInOrder(newEntry);
             String sql = "update data set title = ?,type = ?, description = ?, content = ? where title = ?";
             PreparedStatement preparedStatement = null;
             try {
@@ -220,7 +220,7 @@ public class Bank {
                 System.out.println(e);
                 e.printStackTrace();
             }
-            System.out.println("File modified, Named: " + newEntry.getTitle() + " is already in use"); //TODO REMOVE AFTER TESTING
+            System.out.println("File modified, Named: " + newEntry.getTitle()); //TODO REMOVE AFTER TESTING
             return true;
         }
     }
