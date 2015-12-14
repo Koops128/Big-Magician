@@ -72,5 +72,22 @@ public class Editor {
 	 */
 	public TableModel getTable() {
 		return myBank.getTable();
-	}			
+	}	
+	
+	/**
+	 * This method returns the current table model object restricted by the filters.
+	 * @param filters the string array of filters.
+	 * @return TableModel the current state of the database.
+	 */
+	public TableModel getTable(String[] filters) {
+		return myBank.getTable(filters);
+	}		
+	
+	/**
+	 * Gets the types in the bank for easy filtering.
+	 * @return the types
+	 */
+	public String[] getTypes() {
+		return myBank.getTypes();
+	}
 }
