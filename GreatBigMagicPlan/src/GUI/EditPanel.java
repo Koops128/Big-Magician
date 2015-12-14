@@ -171,10 +171,9 @@ public class EditPanel extends JPanel {
 	}
 	
 	/**
-	 * Takes in the Entry that will be edited, this method will be called by something?
+	 * Sets the JTextAreas to the entrie's current values
 	 * Displays the fields in the TextAreas.
 	 * 
-	 * @param e The Entry
 	 */
 	public void setCurrentEntry() {
 		Entry current = editor.getCurrentEntry();
@@ -186,6 +185,12 @@ public class EditPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Adds a current entry with the add function,
+	 * setting the title off of the file name and the other values to empty
+	 * 
+	 * @param newcontent the title of the entry to be set to
+	 */
 	public void setCurrentEntry(String newcontent) {
 		editor.setCurrentEntry(null);
 		this.clause.setText(newcontent);
