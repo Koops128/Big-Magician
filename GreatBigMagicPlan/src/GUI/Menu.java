@@ -21,7 +21,9 @@ import Model.Editor;
 
 /**
  *
- *
+ *@author: Ash MInoo
+ *@author: Melinda Robertson
+ *@version 20151214
  */
 public class Menu extends JMenuBar {
 
@@ -34,6 +36,9 @@ public class Menu extends JMenuBar {
 	private JMenuItem editEntry;
 	private Editor editor;
 	
+	/*
+	 * constructor class for menu
+	 */
 	public Menu(Editor editor){
 		this.editor = editor;
 		buildFileMenu();
@@ -44,6 +49,10 @@ public class Menu extends JMenuBar {
 		this.add(aboutMenu);
 	}
 	
+	/*
+	 * Method that builds the file menu with menu items and actions
+	 * for those menu items.
+	 */
 	public void buildFileMenu() {	
 		fileMenu = new JMenu("File");
 		JMenuItem addentry = new JMenuItem("Add Entry");
@@ -73,7 +82,7 @@ public class Menu extends JMenuBar {
 				try {
 					while((line = bufferedReader.readLine()) != null) {
 
-						stringBuffer.append(line);//.append("\n");
+						stringBuffer.append(line);
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -89,7 +98,7 @@ public class Menu extends JMenuBar {
 				
 		});
 		
-		
+		//////////////////////////////////////////////////
 		removeEntry = new JMenuItem("Remove Entry");
 		removeEntry.addActionListener((event)->{
 			editor.remove();
@@ -97,11 +106,16 @@ public class Menu extends JMenuBar {
 			this.firePropertyChange(CardPanel.REMOVEPROPERTY, null, CardPanel.MAINNAME);
 		});
 
+		//////////////////////////////////////////////////
+
 		editEntry = new JMenuItem("Edit Entry");
 		editEntry.addActionListener((event)->{
 			this.firePropertyChange(
 					CardPanel.SWITCHPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
+		
+		//////////////////////////////////////////////////
+
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.addActionListener((event)->{
 			int result = JOptionPane.showConfirmDialog(null,
@@ -111,6 +125,7 @@ public class Menu extends JMenuBar {
 			
 
 		});
+		//////////////////////////////////////////////////
 		setEnabled(false);
 		fileMenu.add(addentry);
 		fileMenu.add(removeEntry);
@@ -118,11 +133,17 @@ public class Menu extends JMenuBar {
 		fileMenu.add(exit);
 	}
 	
+	/*
+	 * edit and remove menu items are set to false until an element in the 
+	 * table is selected. Boolean value is determined by setEnabled
+	 */
 	public void setEnabled(boolean b) {
 		removeEntry.setEnabled(b);
 		editEntry.setEnabled(b);
 	}
-	
+	/*
+	 * builds the elements/items of the filter menu
+	 */
 	public void buildFilterMenu() {
 		filterMenu = new JMenu("Filters");
 		ButtonGroup group = new ButtonGroup();
@@ -133,6 +154,9 @@ public class Menu extends JMenuBar {
 		//SELECT DISTINCT Type FROM data
 	}
 	
+	/*
+	 * creates the list of filters made in the button menu
+	 */
 	public void createRadioButtons(String[] theType, ButtonGroup theGroup) {
 		//get the array and loop through the values
 		String name = "";
@@ -145,7 +169,10 @@ public class Menu extends JMenuBar {
 		
 	}
 	
-	
+	/*
+	 * adds an action to the about menu button which pops up the about
+	 * frame which's contents are described in it's unique class.
+	 */
 	public void buildAboutMenu() {
 		aboutMenu = new JMenu("About");
 		JMenuItem about = new JMenuItem("About BigMagician");
