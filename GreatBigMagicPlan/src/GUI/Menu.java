@@ -7,14 +7,17 @@ package GUI;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.MenuElement;
+import javax.swing.MenuSelectionManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Model.Editor;
@@ -35,7 +38,8 @@ public class Menu extends JMenuBar {
 	private JMenuItem removeEntry;
 	private JMenuItem editEntry;
 	private Editor editor;
-	
+	private List<String> filterList = new ArrayList<String>();
+
 	/*
 	 * constructor class for menu
 	 */
@@ -146,15 +150,10 @@ public class Menu extends JMenuBar {
 	 */
 	public void buildFilterMenu() {
 		filterMenu = new JMenu("Filters");
-		ButtonGroup group = new ButtonGroup();
-		JRadioButtonMenuItem allRb = new JRadioButtonMenuItem("All");
-		allRb.addActionListener((event)-> {
-			editor.getTable();
-		});
-		group.add(allRb);
-		filterMenu.add(allRb);
-		createRadioButtons(editor.getTypes(), group);
-		//you're going to add the createRadioButtons method here!
+//		ButtonGroup group = new ButtonGroup();
+
+		createCbButtons(editor.getTypes());
+		//you're going to add the createCbButtons method here!
 		//but there's no database reference to types ;c
 		
 		//get list of distinct types from database
@@ -164,17 +163,41 @@ public class Menu extends JMenuBar {
 	/*
 	 * creates the list of filters made in the button menu
 	 */
-	public void createRadioButtons(String[] theType, ButtonGroup theGroup) {
+	public void createCbButtons(String[] theType) {
+//		group.add(allCb);
+//		JCheckBoxMenuItem allCb = new JCheckBoxMenuItem("All");
+//		allCb.setSelected(true);
+//		allCb.addActionListener((event)-> {
+//			editor.getTable();
+//		});
+//		filterMenu.add(allCb);
 		//get the array and loop through the values
 		for (int i = 0; i < theType.length; i++) {
-			JRadioButtonMenuItem button = new JRadioButtonMenuItem(theType[i]);
+			final String typeName = theType[i];
+			JCheckBoxMenuItem button = new JCheckBoxMenuItem(typeName);
 			button.addActionListener((event)-> {
 //				editor.getTable(theType);
+				if (button.getState() == true) {
+//					allCb.setSelected(false);
+					filterList.add(typeName);
+					editor.getTable(filterList.toArray(new String[filterList.size()]));
+				} else {
+					filterList.remove(typeName);
+					if (filterList.size() == 0) {
+//						allCb.doClick();
+						editor.getTable();
+					} else {
+						editor.getTable(filterList.toArray(new String[filterList.size()]));
+					}
+				}
+//				System.out.println(filterList.toString());
+				filterMenu.doClick(0);
 			});
-			theGroup.add(button);
+//			theGroup.add(button);
 			filterMenu.add(button);
 		}
-		
+
+
 	}
 	
 	/*
