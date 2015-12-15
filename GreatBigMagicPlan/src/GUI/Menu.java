@@ -147,6 +147,13 @@ public class Menu extends JMenuBar {
 	public void buildFilterMenu() {
 		filterMenu = new JMenu("Filters");
 		ButtonGroup group = new ButtonGroup();
+		JRadioButtonMenuItem allRb = new JRadioButtonMenuItem("All");
+		allRb.addActionListener((event)-> {
+			editor.getTable();
+		});
+		group.add(allRb);
+		filterMenu.add(allRb);
+		createRadioButtons(editor.getTypes(), group);
 		//you're going to add the createRadioButtons method here!
 		//but there's no database reference to types ;c
 		
@@ -159,13 +166,14 @@ public class Menu extends JMenuBar {
 	 */
 	public void createRadioButtons(String[] theType, ButtonGroup theGroup) {
 		//get the array and loop through the values
-		String name = "";
-		JRadioButtonMenuItem allRb = new JRadioButtonMenuItem("All");
 		for (int i = 0; i < theType.length; i++) {
 			JRadioButtonMenuItem button = new JRadioButtonMenuItem(theType[i]);
+			button.addActionListener((event)-> {
+//				editor.getTable(theType);
+			});
 			theGroup.add(button);
+			filterMenu.add(button);
 		}
-		
 		
 	}
 	
