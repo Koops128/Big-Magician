@@ -176,10 +176,6 @@ public class MainPanel extends JPanel{
 		edit = new JButton("Edit Entry");
 		edit.setEnabled(false);
 		edit.addActionListener((event)->{
-			//TODO set the Entry that is being edited
-			//get the number of the Entry from the JTable
-			//send to the editor
-			//this.editor.setEditing(          );
 			this.firePropertyChange(
 					CardPanel.SWITCHPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
@@ -187,10 +183,6 @@ public class MainPanel extends JPanel{
 		delete = new JButton("Delete Entry");
 		delete.setEnabled(false);
 		delete.addActionListener((event)->{
-			//TODO ask editor to delete Entry
-			
-			//get the number of the Entry from the JTable
-			//send to the editor
 			int choice = JOptionPane.showConfirmDialog(this, "Confirm delete?");
 			if (choice == JOptionPane.YES_OPTION) {
 				this.editor.remove();
@@ -212,6 +204,18 @@ public class MainPanel extends JPanel{
 	public void resetTable() {
 		this.table.setModel(editor.getTable());
 		this.repaint();
+	}
+	/**
+	 * Resets the values in the table with the corresponding categories.
+	 * @param filters is the list of categories to display.
+	 */
+	public void resetTable(String[] filters) {
+		if (filters == null) {
+			resetTable();
+			return;
+		}
+		table.setModel(editor.getTable(filters));
+		repaint();
 	}
 	
 }

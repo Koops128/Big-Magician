@@ -26,22 +26,43 @@ import Model.Editor;
  *
  *@author: Ash MInoo
  *@author: Melinda Robertson
- *@version 20151214
+ *@version 20151215
  */
 public class Menu extends JMenuBar {
 
+	/**
+	 * The file menu where entries can be added, deleted or modified.
+	 * The user can also exit the program.
+	 */
 	private JMenu fileMenu;
-	
+	/**
+	 * Choosing filters changes the entries in the table.
+	 */
 	private JMenu filterMenu;
-	
+	/**
+	 * The about menu displays information about the program and designers.
+	 */
 	private JMenu aboutMenu;
+	/**
+	 * Removes the current entry.
+	 */
 	private JMenuItem removeEntry;
+	/**
+	 * Edits the curent entry.
+	 */
 	private JMenuItem editEntry;
+	/**
+	 * Bridge to access the database.
+	 */
 	private Editor editor;
+	/**
+	 * List of filters used to determine what is displayed.
+	 */
 	private List<String> filterList = new ArrayList<String>();
 
-	/*
-	 * constructor class for menu
+	/**
+	 * Creates the menu.
+	 * @param editor allows access to the database.
 	 */
 	public Menu(Editor editor){
 		this.editor = editor;
@@ -177,17 +198,20 @@ public class Menu extends JMenuBar {
 			JCheckBoxMenuItem button = new JCheckBoxMenuItem(typeName);
 			button.addActionListener((event)-> {
 //				editor.getTable(theType);
-				if (button.getState() == true) {
+				if (button.isSelected()) {
 //					allCb.setSelected(false);
 					filterList.add(typeName);
-					editor.getTable(filterList.toArray(new String[filterList.size()]));
+					this.firePropertyChange(CardPanel.FILTERPROPERTY, filterList.toArray(new String[filterList.size()]),
+							CardPanel.MAINNAME);
 				} else {
 					filterList.remove(typeName);
 					if (filterList.size() == 0) {
 //						allCb.doClick();
-						editor.getTable();
+						this.firePropertyChange(CardPanel.FILTERPROPERTY, null,
+								CardPanel.MAINNAME);
 					} else {
-						editor.getTable(filterList.toArray(new String[filterList.size()]));
+						this.firePropertyChange(CardPanel.FILTERPROPERTY, filterList.toArray(new String[filterList.size()]),
+								CardPanel.MAINNAME);
 					}
 				}
 //				System.out.println(filterList.toString());
