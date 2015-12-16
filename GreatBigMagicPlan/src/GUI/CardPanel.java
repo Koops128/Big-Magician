@@ -10,7 +10,7 @@ import Model.Editor;
 
 /**
  * @author Melinda Robertson
- * @version 20151211
+ * @version 20151215
  */
 public class CardPanel extends JPanel implements PropertyChangeListener{
 	
@@ -45,15 +45,22 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	 * The remove property tells the card panel to remove an entry and reset
 	 * the main panel.
 	 */
-	
 	public final static String SELECTPROPERTY = "select";
-
+	/**
+	 * The filter property changes the contents of the table when it fires.
+	 */
+	public final static String FILTERPROPERTY = "filter";
+	/**
+	 * This panel is where changes to an entry can be made.
+	 */
 	private EditPanel edit;
 	/**
 	 * The name of the edit panel, used when switching panels.
 	 */
 	public final static String EDITNAME = "Edit View";
-	
+	/**
+	 * This panel displays a table with entries that the user can choose between.
+	 */
 	private Menu menu;
 	/**
 	 * Constructs the card panel by making it a listener for
@@ -68,12 +75,13 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 		edit = new EditPanel(editor);
 		this.menu = menu;
 		
-		main.addPropertyChangeListener("switch", this);
-		edit.addPropertyChangeListener("switch", this);
-		menu.addPropertyChangeListener("switch", this);
-		menu.addPropertyChangeListener("add", this);
-		menu.addPropertyChangeListener("remove", this);
-		main.addPropertyChangeListener("select", this);
+		main.addPropertyChangeListener(SWITCHPROPERTY, this);
+		edit.addPropertyChangeListener(SWITCHPROPERTY, this);
+		menu.addPropertyChangeListener(SWITCHPROPERTY, this);
+		menu.addPropertyChangeListener(ADDPROPERTY, this);
+		menu.addPropertyChangeListener(REMOVEPROPERTY, this);
+		main.addPropertyChangeListener(SELECTPROPERTY, this);
+		menu.addPropertyChangeListener(FILTERPROPERTY, this);
 
 		
 		this.add(main, MAINNAME);
@@ -101,7 +109,9 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 			main.resetTable();
 		} else if (SELECTPROPERTY.equals(event.getPropertyName())) {
 			menu.setEnabled((boolean) event.getOldValue());
-//			System.out.println("went in here!");
+		} else if (FILTERPROPERTY.equals(event.getPropertyName())) {
+			String[] list = (String[]) event.getOldValue();
+			main.resetTable(list);
 		}
 	}
 }
