@@ -115,10 +115,8 @@ public class Menu extends JMenuBar {
 		});
 
 		//------------------BUTTONS-----------------------------------
-		removeEntry = new JMenuItem("Remove Entry");
+		removeEntry = new JMenuItem("Delete Entry");
 		removeEntry.addActionListener((event) -> {
-			editor.remove();
-			System.out.println("oh great now you REMOVED ONE");
 			this.firePropertyChange(CardPanel.DELETEPROPERTY, null,
 					CardPanel.MAINNAME);
 		});
@@ -176,7 +174,7 @@ public class Menu extends JMenuBar {
 			JCheckBoxMenuItem button = new JCheckBoxMenuItem(typeName);
 			button.addActionListener(new FilterListener());
 			filterMenu.add(button);
-			System.out.println("Filter Menu: " + button.getText());
+			//System.out.println("Filter Menu: " + button.getText());
 		}
 	}
 

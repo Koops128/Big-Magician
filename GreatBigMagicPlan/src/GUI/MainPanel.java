@@ -126,8 +126,9 @@ public class MainPanel extends JPanel{
 	public void listSelection() {
 		int row = table.getSelectedRow();
 		if (row >= 0) {
-			editor.setCurrentEntry((String) table.getValueAt(row, 0));
-			System.out.println((String) table.getValueAt(row, 0));
+			String s = (String) table.getValueAt(row, 0);
+			System.out.println(s);
+			editor.setCurrentEntry(s);
 			content.setText(editor.getCurrentEntry().getContent());
 			edit.setEnabled(true);
 			use.setEnabled(true);
@@ -185,8 +186,9 @@ public class MainPanel extends JPanel{
 		delete.setEnabled(false);
 		delete.addActionListener((event)->{
 			int choice = JOptionPane.showConfirmDialog(this, "Confirm delete?");
+			System.out.println(JOptionPane.YES_OPTION + " " + choice);
 			if (choice == JOptionPane.YES_OPTION) {
-				firePropertyChange(CardPanel.DELETEPROPERTY, CardPanel.MAINNAME,
+				firePropertyChange(CardPanel.DELETEPROPERTY, null,
 						CardPanel.MAINNAME);
 			}
 		});
@@ -205,7 +207,7 @@ public class MainPanel extends JPanel{
 		System.out.println("Reset");
 		this.table.setModel(editor.getTable());
 		repaint();
-		listSelection();
+		table.getSelectionModel().clearSelection();
 	}
 	/**
 	 * Resets the values in the table with the corresponding categories.
@@ -219,7 +221,7 @@ public class MainPanel extends JPanel{
 		}
 		table.setModel(editor.getTable(filters));
 		repaint();
-		listSelection();
+		table.getSelectionModel().clearSelection();
 	}
 	
 }

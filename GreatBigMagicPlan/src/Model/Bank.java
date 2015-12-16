@@ -145,7 +145,7 @@ public class Bank {
             stmt = conn.prepareStatement(query);
             stmt.setString(1, s);
             stmt.execute();
-            //System.out.println("Entry with title: '" + s + "' has been deleted from the Bank"); //TODO REMOVE AFTER TESTING
+            System.out.println("Entry with title: '" + s + "' has been deleted from the Bank"); //TODO REMOVE AFTER TESTING
         } catch (SQLException e1) {
             System.out.println(e1);
             e1.printStackTrace();
