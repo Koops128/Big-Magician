@@ -7,10 +7,11 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 
 import Model.Editor;
+import Model.Entry;
 
 /**
  * @author Melinda Robertson
- * @version 20151215
+ * @version 20151216
  */
 public class CardPanel extends JPanel implements PropertyChangeListener{
 	
@@ -19,15 +20,33 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	 */
 	private static final long serialVersionUID = 3034268517929753111L;
 	/**
-	 * The switch property tells the card panel to get the current entry
-	 * from the table and switch to the edit panel.
-	 */
-	public final static String SWITCHPROPERTY = "switch";
-	/**
 	 * The add property tells the card panel to set the current entry
 	 * to null to prepare
 	 */
 	public final static String ADDPROPERTY = "add";
+	/**
+	 * The switch property tells the card panel to get the current entry
+	 * from the table and switch to the edit panel.
+	 */
+	public final static String EDITPROPERTY = "edit";
+	/**
+	 * The remove property tells the card panel to remove an entry and reset
+	 * the main panel.
+	 */
+	public final static String DELETEPROPERTY = "delete";
+	
+	public final static String SAVEPROPERTY = "save";
+	
+	public final static String UPDATEPROPERTY = "update";
+	
+	public final static String CANCELPROPERTY = "cancel";
+
+	public final static String SELECTPROPERTY = "select";
+	/**
+	 * The filter property changes the contents of the table when it fires.
+	 */
+	public final static String FILTERPROPERTY = "filter";
+	
 	/**
 	 * The main panel that holds a list of entries.
 	 */
@@ -40,19 +59,6 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	 * The edit panel where the user can make changes to the
 	 * current entry or create a new entry.
 	 */
-	public final static String REMOVEPROPERTY = "remove";
-	/**
-	 * The remove property tells the card panel to remove an entry and reset
-	 * the main panel.
-	 */
-	public final static String SELECTPROPERTY = "select";
-	/**
-	 * The filter property changes the contents of the table when it fires.
-	 */
-	public final static String FILTERPROPERTY = "filter";
-	/**
-	 * This panel is where changes to an entry can be made.
-	 */
 	private EditPanel edit;
 	/**
 	 * The name of the edit panel, used when switching panels.
@@ -62,6 +68,8 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	 * This panel displays a table with entries that the user can choose between.
 	 */
 	private Menu menu;
+	
+	private Editor editor;
 	/**
 	 * Constructs the card panel by making it a listener for
 	 * certain property change events.
@@ -70,18 +78,24 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	 */
 	public CardPanel(Editor editor, Menu menu) {
 		this.setLayout(new CardLayout());
-		
+		this.editor = editor;
 		main = new MainPanel(editor);
-		edit = new EditPanel(editor);
+		edit = new EditPanel();
 		this.menu = menu;
 		
-		main.addPropertyChangeListener(SWITCHPROPERTY, this);
-		edit.addPropertyChangeListener(SWITCHPROPERTY, this);
-		menu.addPropertyChangeListener(SWITCHPROPERTY, this);
-		menu.addPropertyChangeListener(ADDPROPERTY, this);
-		menu.addPropertyChangeListener(REMOVEPROPERTY, this);
+		main.addPropertyChangeListener(EDITPROPERTY, this);
 		main.addPropertyChangeListener(SELECTPROPERTY, this);
+		main.addPropertyChangeListener(DELETEPROPERTY, this);
+		
+		edit.addPropertyChangeListener(SAVEPROPERTY, this);
+		edit.addPropertyChangeListener(UPDATEPROPERTY, this);
+		edit.addPropertyChangeListener(CANCELPROPERTY, this);
+		
+		menu.addPropertyChangeListener(ADDPROPERTY, this);
+		menu.addPropertyChangeListener(EDITPROPERTY, this);
+		menu.addPropertyChangeListener(DELETEPROPERTY, this);
 		menu.addPropertyChangeListener(FILTERPROPERTY, this);
+		
 
 		
 		this.add(main, MAINNAME);
@@ -93,25 +107,48 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	 * value is only used when adding an entry and the new value
 	 * is always the name of the panel to switch to.
 	 */
-	@Override
+	@Override	
 	public void propertyChange(PropertyChangeEvent event) {
-		if (SWITCHPROPERTY.equals(event.getPropertyName())) {
-			CardLayout cd = (CardLayout) this.getLayout();
-			cd.show(this, (String) event.getNewValue());
-			edit.setCurrentEntry();
+		CardLayout cd = (CardLayout) this.getLayout();
+		cd.show(this, (String) event.getNewValue());
+		switch(event.getPropertyName()) {
+		case ADDPROPERTY:
+			editor.setCurrentEntry(null);
+			edit.setCurrentEntry((String)event.getOldValue());
+			break;
+		case EDITPROPERTY:
+			edit.setCurrentEntry(editor.getCurrentEntry());
+			break;
+		case DELETEPROPERTY:
+			System.out.println(editor.getCurrentEntry().getTitle());
+			editor.remove();
+			menu.createCbButtons();
 			main.resetTable();
+			break;
+		case SAVEPROPERTY:
+			String[] param = (String[]) event.getOldValue();
+			Entry current = new Entry(param[0],param[1],
+					param[2],param[3]);
+			editor.add(current);
+			menu.createCbButtons();
+			main.resetTable();
+			break;
+		case UPDATEPROPERTY:
+			String[] param2 = (String[]) event.getOldValue();
+			editor.changeEntry(param2[0],param2[1],
+					param2[2],param2[3]);
+			break;
+		case CANCELPROPERTY:
 			main.listSelection();
-		} else if (ADDPROPERTY.equals(event.getPropertyName())) {
-			edit.setCurrentEntry((String) event.getOldValue());
-			CardLayout cd = (CardLayout) this.getLayout();
-			cd.show(this, (String) event.getNewValue());
-		} else if (REMOVEPROPERTY.equals(event.getPropertyName())) {
-			main.resetTable();
-		} else if (SELECTPROPERTY.equals(event.getPropertyName())) {
+			break;
+		case FILTERPROPERTY:
+			main.resetTable((String[]) event.getOldValue());
+			break;
+		case SELECTPROPERTY:
 			menu.setEnabled((boolean) event.getOldValue());
-		} else if (FILTERPROPERTY.equals(event.getPropertyName())) {
-			String[] list = (String[]) event.getOldValue();
-			main.resetTable(list);
+			break;
+		default:
+			//System.out.println(event.getPropertyName());
 		}
 	}
 }

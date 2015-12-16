@@ -23,7 +23,7 @@ import Model.Entry;
 /**
  * @author Melinda Robertson
  * @author Sean Markus
- * @version 20151125
+ * @version 20151126
  */
 public class EditPanel extends JPanel {
 	
@@ -32,20 +32,33 @@ public class EditPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -8289922698140492731L;
 
+	/**
+	 * The text field that holds the entry's type.
+	 */
 	private JTextField type;
-	
+	/**
+	 * The text field that holds the entry's title.
+	 */
 	private JTextField title;
-	
+	/**
+	 * The text field that holds the entry's description.
+	 */
 	private JTextField description;
-	
+	/**
+	 * Holds the entry itself.
+	 */
 	private JTextArea clause;
+	/**
+	 * Reference to the data.
+	 */
 	
-	private Editor editor;
-	//private Entry current;
-	
-	public EditPanel(Editor editor) {
-		//editor.registerListener(this);
-		this.editor = editor;
+	private boolean editing;
+	/**
+	 * Creates the panel.
+	 * @param editor is the reference to the data.
+	 */
+	public EditPanel() {
+		editing = false;
 		this.setLayout(new BorderLayout());
 		buildEditPanel();
 		buildBtnPanel();
@@ -129,7 +142,7 @@ public class EditPanel extends JPanel {
 	}
 	
 	/**
-	 * Two buttons:
+	 * Creates two buttons and the listeners:
 	 *  Save
 	 *  Cancel
 	 */
@@ -137,32 +150,25 @@ public class EditPanel extends JPanel {
 		JPanel btnPanel = new JPanel();
 		JButton save = new JButton("Save");
 		save.addActionListener((event)->{
-			//TODO uncomment this when method added to Editor
-			if(editor.getCurrentEntry() == null) {
-				Entry current = new Entry(
-						title.getText(),
-						type.getText(),
-						description.getText(),
-						clause.getText()
-					);
-				editor.add(current);
+			String[] param = new String[4];
+			param[0] = title.getText();
+			param[1] = type.getText();
+			param[2] = description.getText();
+			param[3] = clause.getText();
+			if(!editing) {
+				firePropertyChange(
+						CardPanel.SAVEPROPERTY, param, CardPanel.MAINNAME);
 			} else {
-				editor.changeEntry(
-					this.title.getText(),
-					this.type.getText(),
-					this.description.getText(),
-					this.clause.getText()
-				);
+				firePropertyChange(
+						CardPanel.UPDATEPROPERTY, param, CardPanel.MAINNAME);
 			}
-			this.firePropertyChange(
-					CardPanel.SWITCHPROPERTY, CardPanel.EDITNAME, CardPanel.MAINNAME);
 		});
 		
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener((event)->{
 			//nothing needs to change
 			this.firePropertyChange(
-					CardPanel.SWITCHPROPERTY, CardPanel.EDITNAME, CardPanel.MAINNAME);
+					CardPanel.CANCELPROPERTY, CardPanel.EDITNAME, CardPanel.MAINNAME);
 		});
 		
 		btnPanel.add(save);
@@ -175,13 +181,14 @@ public class EditPanel extends JPanel {
 	 * Displays the fields in the TextAreas.
 	 * 
 	 */
-	public void setCurrentEntry() {
-		Entry current = editor.getCurrentEntry();
+	public void setCurrentEntry(Entry current) {
+		// = editor.getCurrentEntry();
 		if (current != null) {
 			type.setText(current.getType());
 			title.setText(current.getTitle());
 			description.setText(current.getDescription());
 			clause.setText(current.getContent());
+			editing = true;
 		}
 	}
 	
@@ -192,10 +199,10 @@ public class EditPanel extends JPanel {
 	 * @param newcontent the title of the entry to be set to
 	 */
 	public void setCurrentEntry(String newcontent) {
-		editor.setCurrentEntry(null);
 		this.clause.setText(newcontent);
 		type.setText("");
 		title.setText("");
 		description.setText("");
+		editing = false;
 	}
 }
