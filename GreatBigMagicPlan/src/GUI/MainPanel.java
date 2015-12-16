@@ -19,12 +19,11 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
-
 import Model.Editor;
 
 /**
  * @author Melinda Robertson
- * @version 20151211
+ * @version 20151216
  */
 public class MainPanel extends JPanel{
 
@@ -66,6 +65,7 @@ public class MainPanel extends JPanel{
 		this.setLayout(new BorderLayout());
 		buildTablePanel();
 		buildBtnPanel();
+		resetTable();
 	}
 	
 	/**
@@ -78,7 +78,6 @@ public class MainPanel extends JPanel{
 		gb.rowHeights = new int[]{MainFrame.HEIGHT/2,50};
 		tblPanel.setLayout(gb);
 		table = new JTable();
-		resetTable();
 		JScrollPane sc = new JScrollPane(table);
 		sc.setMinimumSize(new Dimension(MainFrame.WIDTH-10,
 				MainFrame.HEIGHT/2+100));
@@ -128,6 +127,7 @@ public class MainPanel extends JPanel{
 		int row = table.getSelectedRow();
 		if (row >= 0) {
 			editor.setCurrentEntry((String) table.getValueAt(row, 0));
+			System.out.println((String) table.getValueAt(row, 0));
 			content.setText(editor.getCurrentEntry().getContent());
 			edit.setEnabled(true);
 			use.setEnabled(true);
@@ -167,6 +167,7 @@ public class MainPanel extends JPanel{
 				myWriter.write(text);
 				myWriter.close();				
 				Runtime runTime = Runtime.getRuntime();
+				@SuppressWarnings("unused")
 				Process process = runTime.exec("notepad " + fTitle);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -177,7 +178,7 @@ public class MainPanel extends JPanel{
 		edit.setEnabled(false);
 		edit.addActionListener((event)->{
 			this.firePropertyChange(
-					CardPanel.SWITCHPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
+					CardPanel.EDITPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
 		
 		delete = new JButton("Delete Entry");
@@ -185,9 +186,8 @@ public class MainPanel extends JPanel{
 		delete.addActionListener((event)->{
 			int choice = JOptionPane.showConfirmDialog(this, "Confirm delete?");
 			if (choice == JOptionPane.YES_OPTION) {
-				this.editor.remove();
-				resetTable();
-				listSelection();
+				firePropertyChange(CardPanel.DELETEPROPERTY, CardPanel.MAINNAME,
+						CardPanel.MAINNAME);
 			}
 		});
 		
@@ -202,20 +202,24 @@ public class MainPanel extends JPanel{
 	 * Resets the table so that changes can be viewed.
 	 */
 	public void resetTable() {
+		System.out.println("Reset");
 		this.table.setModel(editor.getTable());
-		this.repaint();
+		repaint();
+		listSelection();
 	}
 	/**
 	 * Resets the values in the table with the corresponding categories.
 	 * @param filters is the list of categories to display.
 	 */
 	public void resetTable(String[] filters) {
-		if (filters == null) {
+		System.out.println("Reset([])");
+		if (filters == null || filters.length == 0) {
 			resetTable();
 			return;
 		}
 		table.setModel(editor.getTable(filters));
 		repaint();
+		listSelection();
 	}
 	
 }

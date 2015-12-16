@@ -42,7 +42,7 @@ public class Bank {
      * Creates a connection to the database.
      */
     public void createConnection() {
-        System.out.println("opening connection"); //TODO REMOVE AFTER TESTING
+        //System.out.println("opening connection"); //TODO REMOVE AFTER TESTING
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
@@ -59,7 +59,7 @@ public class Bank {
         }
         try {
             this.conn = DriverManager.getConnection("jdbc:sqlite:test.db");
-            System.out.println("Connected to database"); //TODO REMOVE AFTER TESTING
+            //System.out.println("Connected to database"); //TODO REMOVE AFTER TESTING
         } catch (SQLException e) {
             System.out.println("Could not connect to the database. SQL ERR: " + e);
         }
@@ -100,7 +100,7 @@ public class Bank {
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            System.out.println("Found Entries:"); //TODO REMOVE AFTER TESTING
+            //System.out.println("Found Entries:"); //TODO REMOVE AFTER TESTING
             while (rs.next()) {
                 String title = rs.getString("Title");
                 String type = rs.getString("Type");
@@ -108,7 +108,7 @@ public class Bank {
                 String content = rs.getString("Content");
                 Entry e = new Entry(title, type, description, content);
                 ((EntryTableModel) myEntries).add(e);
-                System.out.println("  Title: " + title); //TODO REMOVE AFTER TESTING
+                //System.out.println("  Title: " + title); //TODO REMOVE AFTER TESTING
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -145,7 +145,7 @@ public class Bank {
             stmt = conn.prepareStatement(query);
             stmt.setString(1, s);
             stmt.execute();
-            System.out.println("Entry with title: '" + s + "' has been deleted from the Bank"); //TODO REMOVE AFTER TESTING
+            //System.out.println("Entry with title: '" + s + "' has been deleted from the Bank"); //TODO REMOVE AFTER TESTING
         } catch (SQLException e1) {
             System.out.println(e1);
             e1.printStackTrace();
@@ -159,10 +159,10 @@ public class Bank {
      */
     public boolean addEntry(Entry e) {
         if (((EntryTableModel) myEntries).contains(e)) {
-            System.out.println("Entry: " + e.getTitle() + " already in the Bank"); //TODO REMOVE AFTER TESTING
+            //System.out.println("Entry: " + e.getTitle() + " already in the Bank"); //TODO REMOVE AFTER TESTING
             return false;
         } else if (((EntryTableModel) myEntries).contains(e.getTitle())) {
-            System.out.println("Another Entry already has Title: " + e.getTitle()); //TODO REMOVE AFTER TESTING    
+            //System.out.println("Another Entry already has Title: " + e.getTitle()); //TODO REMOVE AFTER TESTING    
             return false;
         } else {
             ((EntryTableModel) myEntries).addInOrder(e);
@@ -175,7 +175,7 @@ public class Bank {
                 preparedStatement.setString(3, e.getDescription());
                 preparedStatement.setString(4, e.getContent());
                 preparedStatement.executeUpdate();
-                System.out.println("New Entry added with title: " + e.getTitle()); //TODO REMOVE AFTER TESTING
+                //System.out.println("New Entry added with title: " + e.getTitle()); //TODO REMOVE AFTER TESTING
             } catch (SQLException e1) {
                 System.out.println(e1);
                 e1.printStackTrace();
@@ -201,7 +201,7 @@ public class Bank {
      */
     public boolean modifyEntry(Entry newEntry, Entry oldEntry) {
         if (!newEntry.getTitle().equals(oldEntry.getTitle()) && ((EntryTableModel) myEntries).contains(newEntry.getTitle())) {
-            System.out.println("File not modified, Naming Conflict - Title: " + newEntry.getTitle() + " is already in use"); //TODO REMOVE AFTER TESTING
+            //System.out.println("File not modified, Naming Conflict - Title: " + newEntry.getTitle() + " is already in use"); //TODO REMOVE AFTER TESTING
             return false; 
         } else {
             ((EntryTableModel) myEntries).remove(oldEntry);
@@ -220,7 +220,7 @@ public class Bank {
                 System.out.println(e);
                 e.printStackTrace();
             }
-            System.out.println("File modified, Named: " + newEntry.getTitle()); //TODO REMOVE AFTER TESTING
+            //System.out.println("File modified, Named: " + newEntry.getTitle()); //TODO REMOVE AFTER TESTING
             return true;
         }
     }
@@ -247,7 +247,7 @@ public class Bank {
             try {
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                System.out.println("Found Entries with filter '" + filters[i] + "':"); //TODO REMOVE AFTER TESTING
+                //System.out.println("Found Entries with filter '" + filters[i] + "':"); //TODO REMOVE AFTER TESTING
                 while (rs.next()) {
                     String title = rs.getString("Title");
                     String type = rs.getString("Type");
@@ -255,7 +255,7 @@ public class Bank {
                     String content = rs.getString("Content");
                     Entry e = new Entry(title, type, description, content);
                     ((EntryTableModel) x).addInOrder(e);
-                    System.out.println("  Title: " + title); //TODO REMOVE AFTER TESTING
+                    //System.out.println("  Title: " + title); //TODO REMOVE AFTER TESTING
                 }
             } catch (SQLException e) {
                 System.out.println(e);
@@ -285,10 +285,10 @@ public class Bank {
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            System.out.println("Found Types:"); //TODO REMOVE AFTER TESTING
+            //System.out.println("Found Types:"); //TODO REMOVE AFTER TESTING
             while (rs.next()) {
                 String type = rs.getString("Type");
-                System.out.println("  Type: " + type); //TODO REMOVE AFTER TESTING
+                //System.out.println("  Type: " + type); //TODO REMOVE AFTER TESTING
                 types.add(type);
             }
         } catch (SQLException e) {

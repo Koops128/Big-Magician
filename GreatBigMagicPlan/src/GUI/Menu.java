@@ -4,9 +4,12 @@
 
 package GUI;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,23 +19,25 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.MenuElement;
-import javax.swing.MenuSelectionManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Model.Editor;
 
 /**
  *
- *@author: Ash MInoo
- *@author: Melinda Robertson
- *@version 20151215
+ * @author: Ash MInoo
+ * @author: Melinda Robertson
+ * @version 20151216
  */
 public class Menu extends JMenuBar {
 
 	/**
-	 * The file menu where entries can be added, deleted or modified.
-	 * The user can also exit the program.
+	 * Super serial.
+	 */
+	private static final long serialVersionUID = -8741480662637571508L;
+	/**
+	 * The file menu where entries can be added, deleted or modified. The user
+	 * can also exit the program.
 	 */
 	private JMenu fileMenu;
 	/**
@@ -62,9 +67,11 @@ public class Menu extends JMenuBar {
 
 	/**
 	 * Creates the menu.
-	 * @param editor allows access to the database.
+	 * 
+	 * @param editor
+	 *            allows access to the database.
 	 */
-	public Menu(Editor editor){
+	public Menu(Editor editor) {
 		this.editor = editor;
 		buildFileMenu();
 		buildFilterMenu();
@@ -73,165 +80,118 @@ public class Menu extends JMenuBar {
 		this.add(filterMenu);
 		this.add(aboutMenu);
 	}
-	
+
 	/*
-	 * Method that builds the file menu with menu items and actions
-	 * for those menu items.
+	 * Method that builds the file menu with menu items and actions for those
+	 * menu items.
 	 */
-	public void buildFileMenu() {	
+	public void buildFileMenu() {
 		fileMenu = new JMenu("File");
 		JMenuItem addentry = new JMenuItem("Add Entry");
-		addentry.addActionListener((event)->{
-			//TODO open JFileChooser -> if file selected -> 
-			//save file contents to String -> fire property change.
+		addentry.addActionListener((event) -> {
 			StringBuffer stringBuffer = new StringBuffer();
 			final JFileChooser fc = new JFileChooser();
 			fc.setCurrentDirectory(null);
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files",
-					"txt");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(
+					"Text Files", "txt");
 			fc.setFileFilter(filter);
 			int returnVal = fc.showOpenDialog(null);
-			
+
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-				
 				BufferedReader bufferedReader = null;
 				try {
 					bufferedReader = new BufferedReader(new FileReader(file));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				String line = null;
-				try {
-					while((line = bufferedReader.readLine()) != null) {
-
+					String line = null;
+					while ((line = bufferedReader.readLine()) != null) {
 						stringBuffer.append(line);
 					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
-//				System.out.println("you ADDED an ITEM");
-				this.firePropertyChange(
-						CardPanel.ADDPROPERTY, stringBuffer.toString(), CardPanel.EDITNAME);
-		}
-				
-			
-				
+				this.firePropertyChange(CardPanel.ADDPROPERTY,
+						stringBuffer.toString(), CardPanel.EDITNAME);
+			}
 		});
-		
-		//////////////////////////////////////////////////
+
+		//------------------BUTTONS-----------------------------------
 		removeEntry = new JMenuItem("Remove Entry");
-		removeEntry.addActionListener((event)->{
+		removeEntry.addActionListener((event) -> {
 			editor.remove();
 			System.out.println("oh great now you REMOVED ONE");
-			this.firePropertyChange(CardPanel.REMOVEPROPERTY, null, CardPanel.MAINNAME);
+			this.firePropertyChange(CardPanel.DELETEPROPERTY, null,
+					CardPanel.MAINNAME);
 		});
-
-		//////////////////////////////////////////////////
 
 		editEntry = new JMenuItem("Edit Entry");
-		editEntry.addActionListener((event)->{
-			this.firePropertyChange(
-					CardPanel.SWITCHPROPERTY, CardPanel.MAINNAME, CardPanel.EDITNAME);
+		editEntry.addActionListener((event) -> {
+			this.firePropertyChange(CardPanel.EDITPROPERTY,
+					CardPanel.MAINNAME, CardPanel.EDITNAME);
 		});
-		
-		//////////////////////////////////////////////////
 
 		JMenuItem exit = new JMenuItem("Exit");
-		exit.addActionListener((event)->{
+		exit.addActionListener((event) -> {
 			int result = JOptionPane.showConfirmDialog(null,
-					"Are you sure you want to quit?", 
-					"Confirm Quit", JOptionPane.YES_NO_OPTION);
-			if (result == 0) System.exit(0);
-			
+					"Are you sure you want to quit?", "Confirm Quit",
+					JOptionPane.YES_NO_OPTION);
+			if (result == 0)
+				System.exit(0);
 
 		});
-		//////////////////////////////////////////////////
+		
 		setEnabled(false);
 		fileMenu.add(addentry);
 		fileMenu.add(removeEntry);
 		fileMenu.add(editEntry);
 		fileMenu.add(exit);
 	}
-	
-	/*
-	 * edit and remove menu items are set to false until an element in the 
-	 * table is selected. Boolean value is determined by setEnabled
+
+	/**
+	 * Edit and remove menu items are set to false until an element in the table
+	 * is selected. Boolean value is determined by setEnabled
 	 */
 	public void setEnabled(boolean b) {
 		removeEntry.setEnabled(b);
 		editEntry.setEnabled(b);
 	}
-	/*
-	 * builds the elements/items of the filter menu
+
+	/**
+	 * Builds the elements/items of the filter menu.
 	 */
 	public void buildFilterMenu() {
 		filterMenu = new JMenu("Filters");
-//		ButtonGroup group = new ButtonGroup();
-
-		createCbButtons(editor.getTypes());
-		//you're going to add the createCbButtons method here!
-		//but there's no database reference to types ;c
-		
-		//get list of distinct types from database
-		//SELECT DISTINCT Type FROM data
+		createCbButtons();
 	}
-	
-	/*
-	 * creates the list of filters made in the button menu
+
+	/**
+	 * Creates the list of filters made in the button menu.
 	 */
-	public void createCbButtons(String[] theType) {
-//		group.add(allCb);
-//		JCheckBoxMenuItem allCb = new JCheckBoxMenuItem("All");
-//		allCb.setSelected(true);
-//		allCb.addActionListener((event)-> {
-//			editor.getTable();
-//		});
-//		filterMenu.add(allCb);
-		//get the array and loop through the values
+	public void createCbButtons() {
+		String[] theType = editor.getTypes();
+		filterMenu.removeAll();
+		filterList.clear();
+		// get the array and loop through the values
 		for (int i = 0; i < theType.length; i++) {
 			final String typeName = theType[i];
 			JCheckBoxMenuItem button = new JCheckBoxMenuItem(typeName);
-			button.addActionListener((event)-> {
-//				editor.getTable(theType);
-				if (button.isSelected()) {
-//					allCb.setSelected(false);
-					filterList.add(typeName);
-					this.firePropertyChange(CardPanel.FILTERPROPERTY, filterList.toArray(new String[filterList.size()]),
-							CardPanel.MAINNAME);
-				} else {
-					filterList.remove(typeName);
-					if (filterList.size() == 0) {
-//						allCb.doClick();
-						this.firePropertyChange(CardPanel.FILTERPROPERTY, null,
-								CardPanel.MAINNAME);
-					} else {
-						this.firePropertyChange(CardPanel.FILTERPROPERTY, filterList.toArray(new String[filterList.size()]),
-								CardPanel.MAINNAME);
-					}
-				}
-//				System.out.println(filterList.toString());
-				filterMenu.doClick(0);
-			});
-//			theGroup.add(button);
+			button.addActionListener(new FilterListener());
 			filterMenu.add(button);
+			System.out.println("Filter Menu: " + button.getText());
 		}
-
-
 	}
-	
+
+	public String[] getFilters() {
+		return filterList.toArray(new String[filterList.size()]);
+	}
+
 	/*
-	 * adds an action to the about menu button which pops up the about
-	 * frame which's contents are described in it's unique class.
+	 * adds an action to the about menu button which pops up the about frame
+	 * which's contents are described in it's unique class.
 	 */
 	public void buildAboutMenu() {
 		aboutMenu = new JMenu("About");
 		JMenuItem about = new JMenuItem("About BigMagician");
-		about.addActionListener((event)->{
+		about.addActionListener((event) -> {
 			try {
 				new AboutFrame();
 			} catch (Exception e) {
@@ -239,5 +199,28 @@ public class Menu extends JMenuBar {
 			}
 		});
 		aboutMenu.add(about);
+	}
+	
+	private class FilterListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			JCheckBoxMenuItem button = (JCheckBoxMenuItem) event.getSource();
+			if (button.isSelected()) {
+				filterList.add(button.getText());
+				firePropertyChange(CardPanel.FILTERPROPERTY,
+						getFilters(), CardPanel.MAINNAME);
+			} else {
+				filterList.remove(button.getText());
+				if (filterList.size() == 0) {
+					firePropertyChange(CardPanel.FILTERPROPERTY, null,
+							CardPanel.MAINNAME);
+				} else {
+					firePropertyChange(CardPanel.FILTERPROPERTY,
+							getFilters(), CardPanel.MAINNAME);
+				}
+			}
+		}
+		
 	}
 }
