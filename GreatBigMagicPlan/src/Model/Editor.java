@@ -59,8 +59,7 @@ public class Editor {
 	 * @throws NullPointerException
 	 */
 	public void changeEntry(String theTitle, String theType, String theDesc, 
-			String theContent) throws NullPointerException {		
-		
+			String theContent) throws NullPointerException {
 		if(myCurrentEntry == null) throw new NullPointerException();
 		Entry theNewEntry = new Entry(theTitle, theType, theDesc, theContent);
 		myBank.modifyEntry(theNewEntry, myCurrentEntry);

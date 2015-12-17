@@ -137,6 +137,8 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 			String[] param2 = (String[]) event.getOldValue();
 			editor.changeEntry(param2[0],param2[1],
 					param2[2],param2[3]);
+			menu.createCbButtons();
+			main.resetTable();
 			break;
 		case CANCELPROPERTY:
 			main.listSelection();
