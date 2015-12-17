@@ -12,7 +12,7 @@ public class Editor {
 	private Bank myBank = new Bank();
 	
 	/** An instance of an entry, set to be the currently selected entry.*/
-	private Entry myCurrentEntry = null;
+	public Entry myCurrentEntry = null;
 	
 	/**
 	 * This method adds the newly constructed entry to the language library.
