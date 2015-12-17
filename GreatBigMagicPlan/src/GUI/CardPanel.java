@@ -10,8 +10,11 @@ import Model.Editor;
 import Model.Entry;
 
 /**
+ * Manages what happens when buttons are pressed in the two
+ * child panels, main and edit. Listens for various property changes
+ * and acts accordingly.
  * @author Melinda Robertson
- * @version 20151216
+ * @version 20151217
  */
 public class CardPanel extends JPanel implements PropertyChangeListener{
 	
@@ -34,13 +37,22 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	 * the main panel.
 	 */
 	public final static String DELETEPROPERTY = "delete";
-	
+	/**
+	 * Fired when save is pressed on the edit panel.
+	 */
 	public final static String SAVEPROPERTY = "save";
-	
+	/**
+	 * Fired when save is pressed on the edit panel and it's updating
+	 * the current entry.
+	 */
 	public final static String UPDATEPROPERTY = "update";
-	
+	/**
+	 * Fired when cancel is pressed on the edit panel.
+	 */
 	public final static String CANCELPROPERTY = "cancel";
-
+	/**
+	 * Fired when an item is selected on the main panel's table.
+	 */
 	public final static String SELECTPROPERTY = "select";
 	/**
 	 * The filter property changes the contents of the table when it fires.
@@ -68,7 +80,9 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 	 * This panel displays a table with entries that the user can choose between.
 	 */
 	private Menu menu;
-	
+	/**
+	 * Accesses database information.
+	 */
 	private Editor editor;
 	/**
 	 * Constructs the card panel by making it a listener for

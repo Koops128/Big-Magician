@@ -32,20 +32,20 @@ import javax.swing.JTextField;
  	 * Defines the content to display when the button is pushed.
  	 */
  	private final String[][] information = new String[][] {
- 			{"Copyright","2015",""},
- 			{"License", "This program is licensed under General Public License, version 3 GPL-3.0.",""},
-            {"", "", ""},
-            {"Sorry", "That's all.", ""},
-            {"", "", ""},
-            {"...", "...", ""},
-            {"Ouch", "...", ""},
-            {"Okay", "Now you're hurting me", ""},
-            {"Please", "Please stop that", ""},
-            {"Seriously", "My insides hurt", ""},
-            {"STOP", "CLICKING", ""},
-            {"I'M GETTING MAD!", "DON'T MAKE ME TERMINATE THIS PROGRAM!", ""},
-            {"You're", "Asking for it!", ""},
-            {"I AM", "WARNING YOU!!!", ""}
+ 			{"Copyright","2015"},
+ 			{"License", "This program is licensed under General Public License, version 3 GPL-3.0."},
+            {"", ""},
+            {"Sorry", "That's all."},
+            {"", ""},
+            {"...", "..."},
+            {"Ouch", "..."},
+            {"Okay", "Now you're hurting me"},
+            {"Please", "Please stop that"},
+            {"Seriously", "My insides hurt"},
+            {"STOP", "CLICKING"},
+            {"I'M GETTING MAD!", "DON'T MAKE ME TERMINATE THIS PROGRAM!"},
+            {"You're", "Asking for it!"},
+            {"I AM", "WARNING YOU!!!"}
  	};
  	/**
  	 * Counts what information was already displayed.

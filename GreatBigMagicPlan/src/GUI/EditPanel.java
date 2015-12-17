@@ -17,13 +17,13 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import Model.Editor;
 import Model.Entry;
 
 /**
+ * Allows the user to edit or add an Entry.
  * @author Melinda Robertson
  * @author Sean Markus
- * @version 20151126
+ * @version 20151217
  */
 public class EditPanel extends JPanel {
 	
@@ -179,7 +179,7 @@ public class EditPanel extends JPanel {
 	/**
 	 * Sets the JTextAreas to the entrie's current values
 	 * Displays the fields in the TextAreas.
-	 * 
+	 * @param current is the current entry that is being edited.
 	 */
 	public void setCurrentEntry(Entry current) {
 		// = editor.getCurrentEntry();
@@ -193,10 +193,11 @@ public class EditPanel extends JPanel {
 	}
 	
 	/**
-	 * Adds a current entry with the add function,
-	 * setting the title off of the file name and the other values to empty
+	 * Prepares to add a new entry to the database by setting
+	 * the content to the provided String and empties all other
+	 * fields.
 	 * 
-	 * @param newcontent the title of the entry to be set to
+	 * @param newcontent the content of a new Entry.
 	 */
 	public void setCurrentEntry(String newcontent) {
 		this.clause.setText(newcontent);

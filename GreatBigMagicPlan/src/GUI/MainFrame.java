@@ -1,6 +1,3 @@
-/**
- * 
- */
 package GUI;
 
 import java.awt.Dimension;

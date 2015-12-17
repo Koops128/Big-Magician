@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 package GUI;
 
 import java.awt.event.ActionEvent;
@@ -24,7 +20,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import Model.Editor;
 
 /**
- *
+ * The menu provides the same functions as the main panel as well as
+ * allowing the user to filter the table of entries, add new entries
+ * to the database and view information about the team and program.
  * @author: Ash MInoo
  * @author: Melinda Robertson
  * @version 20151216
@@ -81,7 +79,7 @@ public class Menu extends JMenuBar {
 		this.add(aboutMenu);
 	}
 
-	/*
+	/**
 	 * Method that builds the file menu with menu items and actions for those
 	 * menu items.
 	 */
@@ -178,6 +176,10 @@ public class Menu extends JMenuBar {
 		}
 	}
 
+	/**
+	 * Gets the list of filters.
+	 * @return the list of filter names.
+	 */
 	public String[] getFilters() {
 		return filterList.toArray(new String[filterList.size()]);
 	}
@@ -198,7 +200,13 @@ public class Menu extends JMenuBar {
 		});
 		aboutMenu.add(about);
 	}
-	
+	/**
+	 * This class is a listener for the check boxes in the filter
+	 * menu. When a check box is clicked that filter is either added
+	 * or taken off of the table in main.
+	 * @author Ashcon Minoo
+	 * @version 20151216
+	 */
 	private class FilterListener implements ActionListener {
 
 		@Override

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package GUI;
 
 import java.awt.BorderLayout;
@@ -22,10 +19,14 @@ import javax.swing.ListSelectionModel;
 import Model.Editor;
 
 /**
+ * This panel holds a table that lists the entries from the database and also
+ * a preview text area that shows the entry that is highlighted in the table.
+ * Fires various property events when buttons are pressed or items are
+ * selected in the table.
  * @author Melinda Robertson
  * @version 20151216
  */
-public class MainPanel extends JPanel{
+public class MainPanel extends JPanel {
 
 	/**
 	 * Super Serial
@@ -150,9 +151,9 @@ public class MainPanel extends JPanel{
 	
 	/**
 	 * Builds the box that holds three buttons:
-	 * 	Use Clause
-	 *  Edit Clause
-	 *  Delete Clause
+	 * 	Use Clause opens the notepad with the current clause loaded.
+	 *  Edit Clause switches to the edit panel with the current clause loaded.
+	 *  Delete Clause removes the current clause from the database.
 	 */
 	private void buildBtnPanel() {
 		JPanel btnPanel = new JPanel();
