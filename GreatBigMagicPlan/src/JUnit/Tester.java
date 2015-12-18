@@ -51,7 +51,7 @@ public class Tester {
     public void testSetCurrentEntry(){
     	myEditor.add(myEntry);
     	myEditor.setCurrentEntry(myEntry.getTitle());	
-    	assertEquals(myEntry, myEditor.myCurrentEntry);
+    	assertEquals(myEntry.getTitle(), myEditor.myCurrentEntry.getTitle());
     }
 
     /**
@@ -59,11 +59,62 @@ public class Tester {
      */
     @Test
     public void testRemove(){
-    	myEditor.add(myEntry);
-    	myEditor.setCurrentEntry(myEntry.getTitle());
-    	myEditor.remove();
-    	
-    	assertEquals(null, myEditor.getCurrentEntry());
+        myEditor.add(myEntry);
+        myEditor.setCurrentEntry(myEntry.getTitle());
+        myEditor.remove();
+        
+        assertEquals(null, myEditor.getCurrentEntry());
     }
 
+    /**
+     * Test method for setting the current entry to null and seeing if it will return null. 
+     * @author Matthew Cles
+     */
+    @Test
+    public void testNullEntry(){
+        String s = null;
+        myEditor.setCurrentEntry(s);
+        assertEquals(null, myEditor.getCurrentEntry());
+    }
+
+    /**
+     * Test method for editing the current entry. 
+     * @author Matthew Cles
+     */
+    @Test
+    public void testEditEntry(){
+        String newTitle = "Did it work?";
+        String newType = "Test";
+        String newDesc = "I think so...";
+        String newContent = "Yup, yup it did";
+        String oldTitle = myEntry.getTitle();
+        String oldType = myEntry.getType();
+        String oldDesc = myEntry.getDescription();
+        String oldContent = myEntry.getContent();
+        myEditor.add(myEntry);
+        myEditor.setCurrentEntry(myEntry.getTitle());
+        myEditor.changeEntry(newTitle, newType, newDesc, newContent);
+        myEditor.setCurrentEntry(newTitle);
+        assertEquals(myEditor.getCurrentEntry().getTitle(), newTitle);
+        assertEquals(myEditor.getCurrentEntry().getType(), newType);
+        assertEquals(myEditor.getCurrentEntry().getDescription(), newDesc);
+        assertEquals(myEditor.getCurrentEntry().getContent(), newContent);
+        myEditor.changeEntry(oldTitle, oldType, oldDesc, oldContent);
+        myEditor.remove();
+    }
+
+    /**
+     * Test method for editing the current entry when null. 
+     * @author Matthew Cles
+     */
+    @Test(expected = NullPointerException.class)
+    public void testEditNullEntry(){
+        String s = null;
+        String newTitle = "Did it work?";
+        String newType = "Test";
+        String newDesc = "I think so...";
+        String newContent = "Yup, yup it did";
+        myEditor.setCurrentEntry(s);
+        myEditor.changeEntry(newTitle, newType, newDesc, newContent);
+    }
 }
