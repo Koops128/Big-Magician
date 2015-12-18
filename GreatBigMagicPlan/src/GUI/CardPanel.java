@@ -134,7 +134,6 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 			edit.setCurrentEntry(editor.getCurrentEntry());
 			break;
 		case DELETEPROPERTY:
-			System.out.println(editor.getCurrentEntry().getTitle());
 			editor.remove();
 			menu.createCbButtons();
 			main.resetTable();
@@ -164,7 +163,6 @@ public class CardPanel extends JPanel implements PropertyChangeListener{
 			menu.setEnabled((boolean) event.getOldValue());
 			break;
 		default:
-			//System.out.println(event.getPropertyName());
 		}
 	}
 }

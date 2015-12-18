@@ -19,6 +19,12 @@ import javax.swing.table.TableModel;
  * and to populate the GUI with a table. Entries that are added, removed, or otherwise 
  * modified are done so both in the TableModel and the Database.
  * 
+ * The SQLite jar that we are using in our program was found at: priede.bf.lu.lv/pub/DatuBazes/SQLite/SqliteJDBC/about.htm
+ * It uses almost exactly the same syntax as the mySQL extension jar that I used for my 
+ * databases project, but a sample of how the SQLite syntax is supposed to be used, that 
+ * I used as a reference, can be found at: http://stackoverflow.com/questions/41233/java-and-sqlite
+ * (Note that this is where I found the download link for SQLite)
+ * 
  * @author Matthew Cles
  * @version 3.1
  */
@@ -80,17 +86,11 @@ public class Bank {
         File theDir = new File(DATABASE_LOCATION);
         // if the directory does not exist, create it
         if (!theDir.exists()) {
-            System.out.println("creating directory: " + DATABASE_LOCATION);
-            boolean result = false;
             try{
                 theDir.mkdir();
-                result = true;
             } 
             catch(SecurityException se){
                 se.printStackTrace();
-            }        
-            if(result) {    
-                System.out.println("DIR created");  
             }
         }
         Class.forName("org.sqlite.JDBC");

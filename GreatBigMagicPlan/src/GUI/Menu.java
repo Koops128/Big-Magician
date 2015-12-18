@@ -172,7 +172,6 @@ public class Menu extends JMenuBar {
 			JCheckBoxMenuItem button = new JCheckBoxMenuItem(typeName);
 			button.addActionListener(new FilterListener());
 			filterMenu.add(button);
-			//System.out.println("Filter Menu: " + button.getText());
 		}
 	}
 
