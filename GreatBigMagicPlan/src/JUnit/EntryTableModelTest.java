@@ -40,7 +40,8 @@ public class EntryTableModelTest {
 	@Test
 	public void testAdd() {
 		model.add(new Entry("a","type","desc","content"));
-		assertEquals("Entry not added correctly.","a",model.getValueAt(0, 1));
+		System.out.println(model.getValueAt(1, 0));
+		assertEquals("Entry not added correctly.","a",model.getValueAt(1,0));
 		model.remove("a");
 	}
 
