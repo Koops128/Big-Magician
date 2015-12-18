@@ -3,6 +3,7 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import Model.Editor;
@@ -45,7 +46,9 @@ public class MainFrame extends JFrame{
 	 * Constructs the frame that holds the majority of the program contents.
 	 */
 	public MainFrame() {
-		this.setTitle("Clause");
+		this.setTitle("Big Magician Text Bank");
+		ImageIcon img = new ImageIcon("./Image/The Wizard.png");
+		this.setIconImage(img.getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(x,y,WIDTH,HEIGHT);
 		Editor editor = new Editor();

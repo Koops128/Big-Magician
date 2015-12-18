@@ -128,7 +128,6 @@ public class MainPanel extends JPanel {
 		int row = table.getSelectedRow();
 		if (row >= 0) {
 			String s = (String) table.getValueAt(row, 0);
-			System.out.println(s);
 			editor.setCurrentEntry(s);
 			content.setText(editor.getCurrentEntry().getContent());
 			edit.setEnabled(true);
@@ -169,8 +168,7 @@ public class MainPanel extends JPanel {
 				myWriter.write(text);
 				myWriter.close();				
 				Runtime runTime = Runtime.getRuntime();
-				@SuppressWarnings("unused")
-				Process process = runTime.exec("notepad " + fTitle);
+				runTime.exec("notepad " + fTitle);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -187,7 +185,6 @@ public class MainPanel extends JPanel {
 		delete.setEnabled(false);
 		delete.addActionListener((event)->{
 			int choice = JOptionPane.showConfirmDialog(this, "Confirm delete?");
-			System.out.println(JOptionPane.YES_OPTION + " " + choice);
 			if (choice == JOptionPane.YES_OPTION) {
 				firePropertyChange(CardPanel.DELETEPROPERTY, null,
 						CardPanel.MAINNAME);
@@ -205,7 +202,6 @@ public class MainPanel extends JPanel {
 	 * Resets the table so that changes can be viewed.
 	 */
 	public void resetTable() {
-		System.out.println("Reset");
 		this.table.setModel(editor.getTable());
 		repaint();
 		table.getSelectionModel().clearSelection();
@@ -215,7 +211,6 @@ public class MainPanel extends JPanel {
 	 * @param filters is the list of categories to display.
 	 */
 	public void resetTable(String[] filters) {
-		System.out.println("Reset([])");
 		if (filters == null || filters.length == 0) {
 			resetTable();
 			return;
