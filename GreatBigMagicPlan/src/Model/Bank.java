@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,7 +23,11 @@ import javax.swing.table.TableModel;
  * @version 3.1
  */
 public class Bank {
-    
+
+    /**the folder location of the database.*/
+    public static final String DATABASE_LOCATION = "C:/Temp/";
+    /**the name of the database.*/
+    public static final String DATABASE_NAME = "360-Big-Magician-entries";
     /**The entries the are stored in the bank.*/
     private TableModel myEntries;
     /**The connection to the database.*/
@@ -53,11 +58,11 @@ public class Bank {
             e.printStackTrace();
         }
         try {
-            this.conn = DriverManager.getConnection("jdbc:sqlite:C:/Temp/360-Big-Magician-entries.db");
+            this.conn = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_LOCATION + DATABASE_NAME + ".db");
         } catch (SQLException e) {
             try {
                 createDatabase();
-                this.conn = DriverManager.getConnection("jdbc:sqlite:C:/Temp/360-Big-Magician-entries.db");
+                this.conn = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_LOCATION + DATABASE_NAME + ".db");
             } catch (ClassNotFoundException | SQLException e1) {
                 e1.printStackTrace();
             }
@@ -71,8 +76,25 @@ public class Bank {
      * @author Matthew Cles
      */
     public void createDatabase() throws ClassNotFoundException, SQLException {
+        //Special thanks to Eric Leschinski and Jigar Joshi from Stackoverflow.com for the code to create a directory.
+        File theDir = new File(DATABASE_LOCATION);
+        // if the directory does not exist, create it
+        if (!theDir.exists()) {
+            System.out.println("creating directory: " + DATABASE_LOCATION);
+            boolean result = false;
+            try{
+                theDir.mkdir();
+                result = true;
+            } 
+            catch(SecurityException se){
+                se.printStackTrace();
+            }        
+            if(result) {    
+                System.out.println("DIR created");  
+            }
+        }
         Class.forName("org.sqlite.JDBC");
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/Temp/360-Big-Magician-entries.db");
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_LOCATION + DATABASE_NAME + ".db");
         Statement stat = conn.createStatement();
         stat.executeUpdate("drop table if exists data;");
         stat.executeUpdate("create table data (title unique, type, description, content);");
@@ -102,7 +124,7 @@ public class Bank {
         } catch (SQLException e) {
             if(!populateAttempted) {
                 try {
-                    populateDatabase();
+                    createDatabase();
                 } catch (ClassNotFoundException | SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -311,10 +333,7 @@ public class Bank {
      */
     public void populateDatabase() throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/Temp/360-Big-Magician-entries.db");
-        Statement stat = conn.createStatement();
-        stat.executeUpdate("drop table if exists data;");
-        stat.executeUpdate("create table data (title unique, type, description, content);");
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_LOCATION + DATABASE_NAME + ".db");
         PreparedStatement prep = conn.prepareStatement("insert into data values (?, ?, ?, ?);");
 
         prep.setString(1, "Legal Document 1a");
@@ -392,7 +411,7 @@ public class Bank {
         prep.setString(1, "*NOTE 2");
         prep.setString(2, "NOTE");
         prep.setString(3, "Where did you hide the database?!?");
-        prep.setString(4, "This database is created and stored in side of your hard-drives Temp folder, or more specifically, the path is: \"C:/Temp/360-Big-Magician-entries.db\" if you need to delete it for any reason (I don't think that the file should get too bulky... 50kb maybe? its only around 15kb when generated) it will not harm this program if it is ran again, but all modifications to the original database will of course be lost.");
+        prep.setString(4, "This database is created and stored in side of your hard-drives Temp folder, or more specifically, the path is: \"" + DATABASE_LOCATION + DATABASE_NAME + ".db\" if you need to delete it for any reason (I don't think that the file should get too bulky... 50kb maybe? its only around 15kb when generated) it will not harm this program if it is ran again, but all modifications to the original database will of course be lost.");
         prep.addBatch();
         
         conn.setAutoCommit(false);
